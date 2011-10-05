@@ -1,0 +1,23 @@
+{
+  "name": "mock.js",
+  "description": "javascript mocking library built on should.js",
+  "version": "0.0.1",
+  "author": "Wagner Montalvao Camarao <functioncallback@gmail.com>",
+  "homepage": "https://github.com/functioncallback/mock.js",
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/functioncallback/mock.js.git"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": "0.4.x"
+  },
+  "dependencies": {
+    "expresso": "0.9.0",
+    "should": "0.3.1"
+  },
+  "devDependencies": {},
+  "main": "lib/mock.js"
+}
