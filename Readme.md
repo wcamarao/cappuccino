@@ -8,7 +8,7 @@
   
     $ npm install mock.js
 
-## License 
+## License
 
   (The MIT License)
   
