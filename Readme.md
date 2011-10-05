@@ -2,6 +2,12 @@
 
   javascript mocking library built on should.js
 
+## Installation
+
+  Using the node package manager
+  
+    $ npm install mock.js
+
 ## License 
 
   (The MIT License)

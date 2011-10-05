@@ -1,4 +1,4 @@
 var it = module.exports;
 var should = require('should');
-var mockjs = require('mock');
+var mockjs = require('../lib/mock');
 
