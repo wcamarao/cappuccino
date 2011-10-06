@@ -1,20 +1,20 @@
 var it = module.exports;
 var should = require('should');
-var mockjs = require('../lib/mock');
-var mock = mockjs.mock;
+var $ = require('../lib/mock')
+  , mock = $.mock
+  , when = $.when
+  , verify = $.verify
+  , any = $.any;
 
-it['should mock only methods but not other types of properties'] = function() {
+it['should mock only methods but not other property types'] = function() {
   
   var mockedObject = mock(sampleObject());
   
-  mockedObject.should.not.have.property('id');
-  mockedObject.should.not.have.property('array');
-  mockedObject.should.not.have.property('object');
   mockedObject.should.not.have.property('bool');
-  mockedObject.should.not.have.property('nill');
+  mockedObject.should.not.have.property('number');
+  mockedObject.should.not.have.property('object');
   mockedObject.should.not.have.property('undef');
-  mockedObject.should.not.have.property('date');
-  mockedObject.should.not.have.property('entry');
+  mockedObject.should.not.have.property('string');
   
   mockedObject.should.have.property('get');
   mockedObject.get.should.be.a('function');
@@ -22,14 +22,11 @@ it['should mock only methods but not other types of properties'] = function() {
 
 function sampleObject() {
   return {
-    id: 1,
-    array: [],
-    object: {},
     bool: true,
-    nill: null,
+    number: 1,
+    object: [],
     undef: undefined,
-    date: new Date(),
-    entry: 'some text',
+    string: 'some text',
     get: function() { return 0; }
   };
 }
