@@ -1,7 +1,7 @@
 {
   "name": "mock.js",
   "description": "javascript mocking library built on should.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Wagner Montalvao Camarao <functioncallback@gmail.com>",
   "homepage": "https://github.com/functioncallback/mock.js",
   "repository": {
