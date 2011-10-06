@@ -1,6 +1,6 @@
 # mock.js
 
-  mock.js is a javascript mocking library built on should.js
+  mock.js is a javascript mocking library built on [should.js](https://github.com/visionmedia/should.js)
 
 ## Installation
 
