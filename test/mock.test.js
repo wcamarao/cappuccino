@@ -19,7 +19,7 @@ it['should mock only methods but not other property types'] = function() {
   mocked.should.not.have.property('string');
   
   mocked.should.have.property('get');
-  mocked.get.should.be.a('function');
+  mocked['get'].should.be.a('function');
 };
 
 it['should wrap methods in when(mock) context'] = function() {
@@ -27,7 +27,7 @@ it['should wrap methods in when(mock) context'] = function() {
   var wrapped = when(mock(stub.object()));
   
   wrapped.should.have.property('get');
-  wrapped.get.should.be.a('function');
+  wrapped['get'].should.be.a('function');
 };
 
 it['should provide wrapped when(mock) methods with results'] = function() {
@@ -35,10 +35,13 @@ it['should provide wrapped when(mock) methods with results'] = function() {
   var results = when(mock(stub.object())).get();
   
   results.should.have.property('thenReturn');
-  results.thenReturn.should.be.a('function');
+  results['thenReturn'].should.be.a('function');
   
   results.should.have.property('thenThrow');
-  results.thenThrow.should.be.a('function');
+  results['thenThrow'].should.be.a('function');
+  
+  results.should.have.property('thenCall');
+  results['thenCall'].should.be.a('function');
 };
 
 it['should wrap methods in verify(mock) context'] = function() {
@@ -46,7 +49,7 @@ it['should wrap methods in verify(mock) context'] = function() {
   var wrapped = verify(mock(stub.object()));
   
   wrapped.should.have.property('get');
-  wrapped.get.should.be.a('function');
+  wrapped['get'].should.be.a('function');
 };
 
 it['should provide wrapped verify(mock) methods with verifications'] = function() {
@@ -54,7 +57,7 @@ it['should provide wrapped verify(mock) methods with verifications'] = function(
   var verifications = verify(mock(stub.object())).get();
   
   //verifications.should.have.property('once');
-  //verifications.once.should.be.a('function');
+  //verifications['once'].should.be.a('function');
 };
 
 it['should diff original, mocked and wrapped methods'] = function() {
