@@ -1,3 +1,9 @@
+/*
+ * mock.js
+ * Copyright(c) 2011 Wagner Montalvao Camarao <functioncallback@gmail.com>
+ * MIT Licensed
+ */
+
 var it = module.exports
   , should = require('should')
   , stub = require('./stub');
@@ -79,19 +85,19 @@ it['should diff original, mocked and wrapped methods'] = function() {
   wrapped.when.get.should.not.equal(wrapped.verify.get);
 };
 
-it['should stub a method call'] = function() {
+it['should stub a method to return a value'] = function() {
   
-  var mocked = mock(stub.object());
-  var expectedValue = 'some text';
+  var mocked = mock(stub.object())
+    , expectedValue = 'some text';
   
   when(mocked).get().thenReturn(expectedValue);
   mocked.get().should.equal(expectedValue);
 };
 
-it['should stub a method error'] = function() {
+it['should stub a method to throw an error'] = function() {
   
-  var mocked = mock(stub.object());
-  var error = new Error('oops');
+  var mocked = mock(stub.object())
+    , error = new Error('oops');
   
   when(mocked).get().thenThrow(error);
   
@@ -99,10 +105,10 @@ it['should stub a method error'] = function() {
   catch (e) { should.strictEqual(error, e); }
 };
 
-it['should stub a method callback'] = function() {
+it['should stub a method to call a callback'] = function() {
   
-  var mocked = mock(stub.object());
-  var expectedNumber = 0;
+  var mocked = mock(stub.object())
+    , expectedNumber = 0;
   
   function callback() {
     return expectedNumber + 1;
@@ -112,7 +118,16 @@ it['should stub a method callback'] = function() {
   mocked.get().should.equal(1);
 };
 
-it['should not stub an invalid method call'] = function() {
+it['should match a method call with any type'] = function() {
+  
+  var mocked = mock(stub.object())
+    , anyObject = [];
+  
+  when(mocked).get(any('object')).thenReturn(true);
+  mocked.get(anyObject).should.equal(true);
+};
+
+it['should not match a method call with invalid argument'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -122,19 +137,10 @@ it['should not stub an invalid method call'] = function() {
   catch (e) { should.strictEqual(1, e.expected); }
 };
 
-it['should stub a method call with any type'] = function() {
+it['should not match a method call with a wrong type'] = function() {
   
-  var mocked = mock(stub.object());
-  var anyObject = [];
-  
-  when(mocked).get(any('object')).thenReturn(true);
-  mocked.get(anyObject).should.equal(true);
-};
-
-it['should not stub a method call with a wrong type'] = function() {
-  
-  var mocked = mock(stub.object());
-  var aString = 'some text';
+  var mocked = mock(stub.object())
+    , aString = 'some text';
   
   when(mocked).get(any('object')).thenReturn(true);
   
