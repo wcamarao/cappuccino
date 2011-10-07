@@ -82,7 +82,7 @@ it['should diff original, mocked and wrapped methods'] = function() {
   mocked.get.should.not.equal(wrapped.when.get);
   mocked.get.should.not.equal(wrapped.verify.get);
   
-  wrapped.when.get.should.not.equal(wrapped.verify.get);
+  wrapped.when.get.should.not.equal(wrapped.verify.get);  
 };
 
 it['should stub a method to return a value'] = function() {
