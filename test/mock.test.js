@@ -20,6 +20,7 @@ it['should mock only methods but not other property types'] = function() {
   
   mocked.should.have.property('get');
   mocked.get.should.be.a('function');
+  
 };
 
 it['should wrap methods in when(mock) context'] = function() {
@@ -28,6 +29,7 @@ it['should wrap methods in when(mock) context'] = function() {
   
   wrapped.should.have.property('get');
   wrapped.get.should.be.a('function');
+  
 };
 
 it['should provide wrapped when(mock) methods with results'] = function() {
@@ -39,6 +41,7 @@ it['should provide wrapped when(mock) methods with results'] = function() {
   
   results.should.have.property('thenThrow');
   results.thenThrow.should.be.a('function');
+  
 };
 
 it['should wrap methods in verify(mock) context'] = function() {
@@ -47,6 +50,7 @@ it['should wrap methods in verify(mock) context'] = function() {
   
   wrapped.should.have.property('get');
   wrapped.get.should.be.a('function');
+  
 };
 
 it['should provide wrapped verify(mock) methods with verifications'] = function() {
@@ -55,6 +59,7 @@ it['should provide wrapped verify(mock) methods with verifications'] = function(
   
   //verifications.should.have.property('once');
   //verifications.once.should.be.a('function');
+  
 };
 
 it['should diff original, mocked and wrapped methods'] = function() {
@@ -74,6 +79,7 @@ it['should diff original, mocked and wrapped methods'] = function() {
   mocked.get.should.not.equal(wrapped.verify.get);
   
   wrapped.when.get.should.not.equal(wrapped.verify.get);
+  
 };
 
 it['should stub a method call'] = function() {
@@ -83,6 +89,7 @@ it['should stub a method call'] = function() {
   
   when(mocked).get().thenReturn(expectedValue);
   mocked.get().should.equal(expectedValue);
+  
 };
 
 it['should stub a method error'] = function() {
@@ -94,6 +101,7 @@ it['should stub a method error'] = function() {
   
   try { mocked.get(); }
   catch (e) { should.strictEqual(error, e); }
+  
 };
 
 it['should stub a method callback'] = function() {
@@ -107,6 +115,7 @@ it['should stub a method callback'] = function() {
   
   when(mocked).get().thenCall(callback);
   mocked.get().should.equal(1);
+
 };
 
 it['should not stub an invalid method call'] = function() {
@@ -117,6 +126,7 @@ it['should not stub an invalid method call'] = function() {
   
   try { mocked.get(2); }
   catch (e) { should.strictEqual(1, e.expected); }
+
 };
 
 it['should stub a method call with any type'] = function() {
@@ -126,6 +136,7 @@ it['should stub a method call with any type'] = function() {
   
   when(mocked).get(any('object')).thenReturn(true);
   mocked.get(anyObject).should.equal(true);
+
 };
 
 it['should not stub a method call with a wrong type'] = function() {
@@ -137,4 +148,5 @@ it['should not stub a method call with a wrong type'] = function() {
   
   try { mocked.get(aString); }
   catch (e) { should.strictEqual(any('object').expectedValue(), e.expected); }
+
 };
