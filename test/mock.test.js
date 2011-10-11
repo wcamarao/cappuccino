@@ -21,4 +21,7 @@ it['should mock only methods but not other property types'] = function() {
   
   mocked.should.have.property('get');
   mocked['get'].should.be.a('function');
+  
+  mocked.should.have.property('set');
+  mocked['set'].should.be.a('function');
 };
