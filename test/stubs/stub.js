@@ -13,6 +13,7 @@ stub.object = function() {
     object: [],
     undef: undefined,
     string: 'some text',
-    get: function() { return 0; }
+    get: function() { return 0; },
+    set: function(key, value) { this.object[key] = value }
   };
 };
