@@ -19,6 +19,22 @@ it['should setup an empty state for a mock method'] = function() {
   should.not.exist(state.matcherAt(mock, method, 0));
 };
 
+it['should retrieve methods from a mock'] = function() {
+  
+  var mock = {}
+    , firstMethod = 'getSomething'
+    , secondMethod = 'setSomething';
+  
+  state.bind(mock, firstMethod);
+  state.bind(mock, secondMethod);
+  
+  var methods = state.methods(mock);
+  
+  methods.length.should.equal(2);
+  methods[0].should.equal(firstMethod);
+  methods[1].should.equal(secondMethod);
+};
+
 it['should set a result for a mock method'] = function() {
   
   var mock = {}
@@ -45,4 +61,19 @@ it['should add matchers for mock method arguments'] = function() {
   
   state.matcherAt(mock, method, 0).should.equal(firstMatcher);
   state.matcherAt(mock, method, 1).should.equal(secondMatcher);
+};
+
+it['should count mock method calls'] = function() {
+  
+  var mock = {}
+    , method = 'get';
+  
+  state.bind(mock, method);
+  state.count(mock, method).should.equal(0);
+  
+  state.increaseCount(mock, method);
+  state.count(mock, method).should.equal(1);
+  
+  state.increaseCount(mock, method);
+  state.count(mock, method).should.equal(2);
 };
