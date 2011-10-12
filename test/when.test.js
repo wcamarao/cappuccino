@@ -22,16 +22,13 @@ it['should wrap methods in when(mock) context'] = function() {
 
 it['should provide wrapped methods with results'] = function() {
   
-  var results = when(mock(stub.object())).get();
+  var results = when(mock(stub.object())).get()
+    , methods = ['thenReturn', 'thenThrow', 'thenCall'];
   
-  results.should.have.property('thenReturn');
-  results['thenReturn'].should.be.a('function');
-  
-  results.should.have.property('thenThrow');
-  results['thenThrow'].should.be.a('function');
-  
-  results.should.have.property('thenCall');
-  results['thenCall'].should.be.a('function');
+  methods.forEach(function (method) {
+    results.should.have.property(method);
+    results[method].should.be.a('function');
+  });
 };
 
 it['should stub a method to return a value'] = function() {
