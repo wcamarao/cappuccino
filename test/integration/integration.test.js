@@ -113,6 +113,8 @@ it['should match method calls by given values not matching a criteria verifying 
   mocked.get('').should.equal(true);
   
   verify(mocked).get().between(1,2);
+  verify(mocked).get().between(2,2);
+  verify(mocked).get().between(2,3);
 };
 
 it['should match method calls by given values matching any criteria verifying only method called'] = function () {
@@ -232,4 +234,43 @@ it['should not match a method call with a given value not ending with a sub valu
   catch (e) { expected = e.expected; }
   
   expected.should.be.equal(endingWith(subValue).expectedValue());
+};
+
+it['should not match method calls by given values failing to not match a criteria'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(not(containing('triangles'))).thenReturn(true);
+  
+  try { mocked.get('circles, triangles, squares').should.equal(true); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(not(containing('triangles')).expectedValue());
+};
+
+it['should not match method calls by given values failing to match any criteria'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(anyOf([startingWith('circles'), endingWith('circles')])).thenReturn(true);
+  
+  try { mocked.get('triangles, circles, squares').should.equal(true); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(anyOf([startingWith('circles'), endingWith('circles')]).expectedValue());
+};
+
+it['should not match method calls by given values failing to match all criteria'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(allOf([startingWith('squares'), endingWith('squares')])).thenReturn(true);
+  
+  try { mocked.get('squares, triangles').should.equal(true); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(allOf([startingWith('squares'), endingWith('squares')]).expectedValue());
 };

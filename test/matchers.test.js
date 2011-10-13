@@ -14,7 +14,10 @@ var $ = require('../lib/mock')
   , matching = $.matching
   , containing = $.containing
   , startingWith = $.startingWith
-  , endingWith = $.endingWith;
+  , endingWith = $.endingWith
+  , not = $.not
+  , anyOf = $.anyOf
+  , allOf = $.allOf;
 
 it['should identify non-matcher values and wrap them by default with equals matcher'] = function() {
   
@@ -109,3 +112,33 @@ it['should match values by ending with a sub value'] = function() {
   matcher.mismatches(anotherText).should.be.true;
   matcher.mismatches(aText).should.not.be.true;
 };
+
+it['should match values by negating another matcher'] = function() {
+  
+  var aText = 'it could be a huge text containing dates and reviews'
+    , anotherText = 'and another one containing only reviews'
+    , matcher = matchers.identify(not(containing('dates')))
+  
+  matcher.mismatches(aText).should.be.true;
+  matcher.mismatches(anotherText).should.not.be.true;
+}
+
+it['should match values by satisfying any other matcher'] = function() {
+  
+  var aText = 'it could be a text containing dates'
+    , anotherText = 'and another one containing reviews'
+    , matcher = matchers.identify(anyOf([containing('dates'), containing('reviews')]))
+  
+  matcher.mismatches(aText).should.be.false;
+  matcher.mismatches(anotherText).should.be.false;
+}
+
+it['should match values by satisfying all other matchers'] = function() {
+  
+  var aText = 'it could be a huge text containing dates'
+    , anotherText = 'and a smaller text containing dates'
+    , matcher = matchers.identify(allOf([containing('text'), endingWith('dates')]))
+  
+  matcher.mismatches(aText).should.be.false;
+  matcher.mismatches(anotherText).should.be.false;
+}
