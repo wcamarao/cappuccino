@@ -43,6 +43,14 @@ it['should verify that a method is always allowed to be called'] = function() {
   verify(mocked).get().allowing();
 };
 
+it['should default to verify that a method is always allowed to be called'] = function() {
+  
+  var mocked = mock(stub.object());
+  
+  mocked.get();
+  mocked.get();
+};
+
 // never
 
 it['should verify that a method has never been called'] = function() {
@@ -56,14 +64,15 @@ it['should verify that a method has never been called'] = function() {
 
 it['should fail verifying that a method has never been called'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   
-  verify(mocked).get().never().shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('never');
-  });
+  try { verify(mocked).get().never(); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('never');
 };
 
 // once
@@ -79,12 +88,13 @@ it['should verify that a method has been called once'] = function() {
 
 it['should fail verifying that a method has been called once'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
-  verify(mocked).get().once().shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('once');
-  });
+  try { verify(mocked).get().once(); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('once');
 };
 
 // twice
@@ -101,14 +111,15 @@ it['should verify that a method has been called twice'] = function() {
 
 it['should fail verifying that a method has been called twice'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   
-  verify(mocked).get().twice().shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('twice');
-  });
+  try { verify(mocked).get().twice(); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('twice');
 };
 
 // times
@@ -126,15 +137,16 @@ it['should verify that a method has been called n times'] = function() {
 
 it['should fail verifying that a method has been called n times'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   mocked.get();
   
-  verify(mocked).get().times(3).shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('3 time(s)');
-  });
+  try { verify(mocked).get().times(3); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('3 time(s)');
 };
 
 // at least
@@ -155,14 +167,15 @@ it['should verify that a method has been called at least n times'] = function() 
 
 it['should fail verifying that a method has been called at least n times'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   
-  verify(mocked).get().atLeast(2).shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('at least 2 time(s)');
-  });
+  try { verify(mocked).get().atLeast(2); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('at least 2 time(s)');
 };
 
 // at most
@@ -181,15 +194,16 @@ it['should verify that a method has been called at most n times'] = function() {
 
 it['should fail verifying that a method has been called at most n times'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   mocked.get();
   
-  verify(mocked).get().atMost(1).shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('at most 1 time(s)');
-  });
+  try { verify(mocked).get().atMost(1); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('at most 1 time(s)');
 };
 
 // between
@@ -210,20 +224,22 @@ it['should verify that a method has been called between n1 and n2 times'] = func
 
 it['should fail verifying that a method has been called between n1 and n2 times'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   mocked.get();
   
-  verify(mocked).get().between(0, 1).shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('between 0 and 1 time(s)');
-  });
+  try { verify(mocked).get().between(0, 1); }
+  catch (e) { expected = e.expected; }
   
-  verify(mocked).get().between(3, 3).shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('between 3 and 3 time(s)');
-  });
+  expected.should.be.equal('between 0 and 1 time(s)');
+  expected = '';
+  
+  try { verify(mocked).get().between(3, 3); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('between 3 and 3 time(s)');
 };
 
 // only
@@ -239,12 +255,13 @@ it['should verify that a method has been the only one called'] = function() {
 
 it['should fail verifying that a method has been the only one called'] = function() {
   
-  var mocked = mock(stub.object());
+  var mocked = mock(stub.object())
+    , expected = '';
   
   mocked.get();
   
-  verify(mocked).set().only().shouldThrow(function (e) {
-    e.should.be.instanceof(Error);
-    e.expected.should.be.equal('should not call get()');
-  });
+  try { verify(mocked).set().only(); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal('should not call get()');
 };
