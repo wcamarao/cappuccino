@@ -5,17 +5,16 @@
  */
 
 var it = module.exports
-  , should = require('should')
-  , matchers = require('../lib/matchers')
-  , stub = require('./stubs/stub');
+  , matchers = require('../lib/matchers');
 
 var $ = require('../lib/mock')
-  , mock = $.mock
-  , when = $.when
-  , verify = $.verify
   , any = $.any
   , a = $.a
-  , an = $.an;
+  , an = $.an
+  , matching = $.matching
+  , containing = $.containing
+  , startingWith = $.startingWith
+  , endingWith = $.endingWith;
 
 it['should identify non-matcher values and wrap them by default with equals matcher'] = function() {
   
@@ -71,66 +70,42 @@ it['should match values by same class'] = function() {
   matcherAn.mismatches(aDate).should.not.be.true;
 };
 
-it['should match a method call with a given value'] = function () {
+it['should match values by regular expressions'] = function() {
   
-  var mocked = mock(stub.object())
-    , givenValue = 'some text';
+  var aSlug = 'this-is-a-slug'
+    , anInvalidSlug = 'but not this'
+    , matcher = matchers.identify(matching(/^[a-z0-9-]+$/))
   
-  when(mocked).get(givenValue).thenReturn(true);
-  mocked.get(givenValue).should.equal(true);
+  matcher.mismatches(anInvalidSlug).should.be.true;
+  matcher.mismatches(aSlug).should.not.be.true;
 };
 
-it['should match a method call with same argument type'] = function () {
+it['should match values by containing a sub value'] = function() {
   
-  var mocked = mock(stub.object());
+  var aText = 'it could be a huge text containing dates and reviews'
+    , anotherText = 'and another one containing only reviews'
+    , matcher = matchers.identify(containing('dates'))
   
-  when(mocked).get(any('object')).thenReturn(true);
-  mocked.get([]).should.equal(true);
+  matcher.mismatches(anotherText).should.be.true;
+  matcher.mismatches(aText).should.not.be.true;
 };
 
-it['should match a method call with same argument class'] = function () {
+it['should match values by starting with a sub value'] = function() {
   
-  var mocked = mock(stub.object());
+  var aText = 'it could be a huge text containing dates and reviews'
+    , anotherText = 'and another one containing only reviews'
+    , matcher = matchers.identify(startingWith('it could be'))
   
-  when(mocked).get(a(Date)).thenReturn(true);
-  mocked.get(new Date()).should.equal(true);
+  matcher.mismatches(anotherText).should.be.true;
+  matcher.mismatches(aText).should.not.be.true;
 };
 
-it['should not match a method call with an invalid argument'] = function () {
+it['should match values by ending with a sub value'] = function() {
   
-  var mocked = mock(stub.object())
-    , expected = '';
+  var aText = 'it could be a huge text containing dates and reviews'
+    , anotherText = 'and another one containing only reviews'
+    , matcher = matchers.identify(endingWith('and reviews'))
   
-  when(mocked).get(1).thenReturn(true);
-  
-  try { mocked.get(2); }
-  catch (e) { expected = e.expected; }
-  
-  expected.should.be.equal(1);
-};
-
-it['should not match a method call with a wrong argument type'] = function () {
-  
-  var mocked = mock(stub.object())
-    , expected = '';
-  
-  when(mocked).get(any('object')).thenReturn(true);
-  
-  try { mocked.get('a string'); }
-  catch (e) { expected = e.expected; }
-  
-  expected.should.be.equal(any('object').expectedValue());
-};
-
-it['should not match a method call with a wrong argument class'] = function () {
-  
-  var mocked = mock(stub.object())
-    , expected = '';
-  
-  when(mocked).get(a(Date)).thenReturn(true);
-  
-  try { mocked.get(42); }
-  catch (e) { expected = e.expected; }
-  
-  expected.should.be.equal(a(Date).expectedValue());
+  matcher.mismatches(anotherText).should.be.true;
+  matcher.mismatches(aText).should.not.be.true;
 };
