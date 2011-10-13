@@ -33,7 +33,7 @@ it['should provide wrapped methods with verifications'] = function() {
 
 // allowing
 
-it['should verify that a mock method is always allowed to be called'] = function() {
+it['should verify that a method is always allowed to be called'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -45,7 +45,7 @@ it['should verify that a mock method is always allowed to be called'] = function
 
 // never
 
-it['should verify that a mock method has never been called'] = function() {
+it['should verify that a method has never been called'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -54,7 +54,7 @@ it['should verify that a mock method has never been called'] = function() {
   verify(mocked).set().never();
 };
 
-it['should fail verifying that a mock method has never been called'] = function() {
+it['should fail verifying that a method has never been called'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -68,7 +68,7 @@ it['should fail verifying that a mock method has never been called'] = function(
 
 // once
 
-it['should verify that a mock method has been called once'] = function() {
+it['should verify that a method has been called once'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -77,7 +77,7 @@ it['should verify that a mock method has been called once'] = function() {
   verify(mocked).get().once();
 };
 
-it['should fail verifying that a mock method has been called once'] = function() {
+it['should fail verifying that a method has been called once'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -89,7 +89,7 @@ it['should fail verifying that a mock method has been called once'] = function()
 
 // twice
 
-it['should verify that a mock method has been called twice'] = function() {
+it['should verify that a method has been called twice'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -99,7 +99,7 @@ it['should verify that a mock method has been called twice'] = function() {
   verify(mocked).get().twice();
 };
 
-it['should fail verifying that a mock method has been called twice'] = function() {
+it['should fail verifying that a method has been called twice'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -113,7 +113,7 @@ it['should fail verifying that a mock method has been called twice'] = function(
 
 // times
 
-it['should verify that a mock method has been called n times'] = function() {
+it['should verify that a method has been called n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -124,7 +124,7 @@ it['should verify that a mock method has been called n times'] = function() {
   verify(mocked).set().times(3);
 };
 
-it['should fail verifying that a mock method has been called n times'] = function() {
+it['should fail verifying that a method has been called n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -139,7 +139,7 @@ it['should fail verifying that a mock method has been called n times'] = functio
 
 // at least
 
-it['should verify that a mock method has been called at least n times'] = function() {
+it['should verify that a method has been called at least n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -153,7 +153,7 @@ it['should verify that a mock method has been called at least n times'] = functi
   verify(mocked).get().atLeast(3);
 };
 
-it['should fail verifying that a mock method has been called at least n times'] = function() {
+it['should fail verifying that a method has been called at least n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -167,7 +167,7 @@ it['should fail verifying that a mock method has been called at least n times'] 
 
 // at most
 
-it['should verify that a mock method has been called at most n times'] = function() {
+it['should verify that a method has been called at most n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -179,7 +179,7 @@ it['should verify that a mock method has been called at most n times'] = functio
   verify(mocked).get().atMost(4);
 };
 
-it['should fail verifying that a mock method has been called at most n times'] = function() {
+it['should fail verifying that a method has been called at most n times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -194,7 +194,7 @@ it['should fail verifying that a mock method has been called at most n times'] =
 
 // between
 
-it['should verify that a mock method has been called between n1 and n2 times'] = function() {
+it['should verify that a method has been called between n1 and n2 times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -208,7 +208,7 @@ it['should verify that a mock method has been called between n1 and n2 times'] =
   verify(mocked).get().between(2, 2);
 };
 
-it['should fail verifying that a mock method has been called between n1 and n2 times'] = function() {
+it['should fail verifying that a method has been called between n1 and n2 times'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -228,7 +228,7 @@ it['should fail verifying that a mock method has been called between n1 and n2 t
 
 // only
 
-it['should verify that a mock method has been the only one called'] = function() {
+it['should verify that a method has been the only one called'] = function() {
   
   var mocked = mock(stub.object());
   
@@ -237,7 +237,7 @@ it['should verify that a mock method has been the only one called'] = function()
   verify(mocked).get().only();
 };
 
-it['should fail verifying that a mock method has been the only one called'] = function() {
+it['should fail verifying that a method has been the only one called'] = function() {
   
   var mocked = mock(stub.object());
   

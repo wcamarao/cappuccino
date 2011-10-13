@@ -7,7 +7,13 @@
 var it = module.exports
   , should = require('should')
   , matchers = require('../lib/matchers')
-  , any = require('../lib/mock').any;
+  , stub = require('./stubs/stub');
+
+var $ = require('../lib/mock')
+  , mock = $.mock
+  , when = $.when
+  , verify = $.verify
+  , any = $.any;
 
 it['should identify non-matcher values and wrap them by default with equals matcher'] = function() {
   
@@ -47,4 +53,47 @@ it['should match values by same type'] = function() {
   
   matcher.mismatches(aNumber).should.be.true;
   matcher.mismatches(anObject).should.not.be.true;
+};
+
+it['should match a method call with a given value'] = function () {
+  
+  var mocked = mock(stub.object())
+    , givenValue = 'some text';
+  
+  when(mocked).get(givenValue).thenReturn(true);
+  mocked.get(givenValue).should.equal(true);
+};
+
+it['should match a method call with same argument type'] = function () {
+  
+  var mocked = mock(stub.object());
+  
+  when(mocked).get(any('object')).thenReturn(true);
+  mocked.get([]).should.equal(true);
+};
+
+it['should not match a method call with invalid argument'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(1).thenReturn(true);
+  
+  try { mocked.get(2); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(1);
+};
+
+it['should not match a method call with a wrong type'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(any('object')).thenReturn(true);
+  
+  try { mocked.get('a string'); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(any('object').expectedValue());
 };

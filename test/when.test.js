@@ -43,12 +43,15 @@ it['should stub a method to return a value'] = function() {
 it['should stub a method to throw an error'] = function() {
   
   var mocked = mock(stub.object())
-    , error = new Error('oops');
+    , error = new Error('oops')
+    , expected = '';
   
   when(mocked).get().thenThrow(error);
   
   try { mocked.get(); }
-  catch (e) { should.strictEqual(error, e); }
+  catch (e) { expected = e; }
+  
+  expected.should.be.equal(error);
 };
 
 it['should stub a method to call a callback'] = function() {
