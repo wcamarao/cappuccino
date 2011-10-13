@@ -1,0 +1,3 @@
+[submodule "resourceloader"]
+	path = examples/resourceloader
+	url = https://github.com/functioncallback/resourceloader
