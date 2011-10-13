@@ -18,9 +18,12 @@ var $ = require('../../lib/mock')
   , matching = $.matching
   , containing = $.containing
   , startingWith = $.startingWith
-  , endingWith = $.endingWith;
+  , endingWith = $.endingWith
+  , not = $.not
+  , anyOf = $.anyOf
+  , allOf = $.allOf;
 
-it['should match a method call with a given value'] = function () {
+it['should match a method call by a given value'] = function () {
   
   var mocked = mock(stub.object())
     , givenValue = 'some text';
@@ -29,57 +32,114 @@ it['should match a method call with a given value'] = function () {
   mocked.get(givenValue).should.equal(true);
 };
 
-it['should match a method call with a given value of same type'] = function () {
+it['should match method calls by given values of same type verifying with allowing and never'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(any('object')).thenReturn(true);
+  mocked.get({}).should.equal(true);
   mocked.get([]).should.equal(true);
+  verify(mocked).get().allowing();
+  verify(mocked).set().never();
 };
 
-it['should match a method call with a given value of same class'] = function () {
+it['should match a method call by a given value of same class verifying once'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(a(Date)).thenReturn(true);
   mocked.get(new Date()).should.equal(true);
+  verify(mocked).get().once();
 };
 
-it['should match a method call with a given value matching a regular expression'] = function () {
+it['should match method calls by given values matching a regular expression verifying twice'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(matching(/^[a-z0-9-]+$/)).thenReturn(true);
+  
   mocked.get('an-example-of-slug').should.equal(true);
+  mocked.get('another-example').should.equal(true);
+  
+  verify(mocked).get().twice();
 };
 
-it['should match a method call with a given value containing a sub value'] = function () {
+it['should match method calls by given values containing a sub value verifying 3 times'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(containing('squares')).thenReturn(true);
+  
+  mocked.get('squares, circles, triangles').should.equal(true);
   mocked.get('circles, squares, triangles').should.equal(true);
+  mocked.get('circles, triangles, squares').should.equal(true);
+  
+  verify(mocked).get().times(3);
 };
 
-it['should match a method call with a given value starting with a sub value'] = function () {
+it['should match method calls by given values starting with a sub value verifying with at least'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(startingWith('circles')).thenReturn(true);
+  
   mocked.get('circles, squares, triangles').should.equal(true);
+  mocked.get('circles').should.equal(true);
+  
+  verify(mocked).get().atLeast(1);
+  verify(mocked).get().atLeast(2);
 };
 
-it['should match a method call with a given value ending with a sub value'] = function () {
+it['should match method calls by given values ending with a sub value verifying with at most'] = function () {
   
   var mocked = mock(stub.object());
   
   when(mocked).get(endingWith('triangles')).thenReturn(true);
+  
   mocked.get('circles, squares, triangles').should.equal(true);
+  mocked.get('triangles').should.equal(true);
+  
+  verify(mocked).get().atMost(2);
+  verify(mocked).get().atMost(3);
 };
 
-// same scenarios in negation form
+it['should match method calls by given values not matching a criteria verifying with between'] = function () {
+  
+  var mocked = mock(stub.object());
+  
+  when(mocked).get(not(containing('triangles'))).thenReturn(true);
+  
+  mocked.get('circles, squares').should.equal(true);
+  mocked.get('').should.equal(true);
+  
+  verify(mocked).get().between(1,2);
+};
 
-it['should not match a method call with a wrong given value'] = function () {
+it['should match method calls by given values matching any criteria verifying only method called'] = function () {
+  
+  var mocked = mock(stub.object());
+  
+  when(mocked).get(anyOf([startingWith('circles'), endingWith('circles')])).thenReturn(true);
+  
+  mocked.get('circles, squares').should.equal(true);
+  mocked.get('triangles, circles').should.equal(true);
+  mocked.get('circles').should.equal(true);
+  
+  verify(mocked).get().only();
+};
+
+it['should match a method call by a given value matching all criteria'] = function () {
+  
+  var mocked = mock(stub.object());
+  
+  when(mocked).get(allOf([startingWith('squares'), endingWith('squares')])).thenReturn(true);
+  
+  mocked.get('squares').should.equal(true);
+};
+
+// failure scenarios
+
+it['should not match a method call with a wrongly given value'] = function () {
   
   var mocked = mock(stub.object())
     , expected = '';
