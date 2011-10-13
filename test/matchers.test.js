@@ -13,7 +13,9 @@ var $ = require('../lib/mock')
   , mock = $.mock
   , when = $.when
   , verify = $.verify
-  , any = $.any;
+  , any = $.any
+  , a = $.a
+  , an = $.an;
 
 it['should identify non-matcher values and wrap them by default with equals matcher'] = function() {
   
@@ -55,6 +57,20 @@ it['should match values by same type'] = function() {
   matcher.mismatches(anObject).should.not.be.true;
 };
 
+it['should match values by same class'] = function() {
+  
+  var aDate = new Date()
+    , aNumber = 42
+    , matcherA = matchers.identify(a(Date))
+    , matcherAn = matchers.identify(an(Date));
+  
+  matcherA.mismatches(aNumber).should.be.true;
+  matcherA.mismatches(aDate).should.not.be.true;
+  
+  matcherAn.mismatches(aNumber).should.be.true;
+  matcherAn.mismatches(aDate).should.not.be.true;
+};
+
 it['should match a method call with a given value'] = function () {
   
   var mocked = mock(stub.object())
@@ -72,7 +88,15 @@ it['should match a method call with same argument type'] = function () {
   mocked.get([]).should.equal(true);
 };
 
-it['should not match a method call with invalid argument'] = function () {
+it['should match a method call with same argument class'] = function () {
+  
+  var mocked = mock(stub.object());
+  
+  when(mocked).get(a(Date)).thenReturn(true);
+  mocked.get(new Date()).should.equal(true);
+};
+
+it['should not match a method call with an invalid argument'] = function () {
   
   var mocked = mock(stub.object())
     , expected = '';
@@ -85,7 +109,7 @@ it['should not match a method call with invalid argument'] = function () {
   expected.should.be.equal(1);
 };
 
-it['should not match a method call with a wrong type'] = function () {
+it['should not match a method call with a wrong argument type'] = function () {
   
   var mocked = mock(stub.object())
     , expected = '';
@@ -96,4 +120,17 @@ it['should not match a method call with a wrong type'] = function () {
   catch (e) { expected = e.expected; }
   
   expected.should.be.equal(any('object').expectedValue());
+};
+
+it['should not match a method call with a wrong argument class'] = function () {
+  
+  var mocked = mock(stub.object())
+    , expected = '';
+  
+  when(mocked).get(a(Date)).thenReturn(true);
+  
+  try { mocked.get(42); }
+  catch (e) { expected = e.expected; }
+  
+  expected.should.be.equal(a(Date).expectedValue());
 };
