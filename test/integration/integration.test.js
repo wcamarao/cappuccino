@@ -5,6 +5,7 @@
  */
 
 var it = module.exports
+  , should = require('should')
   , matchers = require('../../lib/matchers')
   , stub = require('../stubs/stub');
 
