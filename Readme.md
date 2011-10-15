@@ -1,24 +1,18 @@
 # mock.js
 
-  mock.js is a javascript mocking library built on node.js' assert module.
+### javascript mocking library built on node.js' assert module
+  
+  The API is pretty much similar to Mockito, but there are some different aspects as well. It's a bit more lax, as it allows method calls in mocks by default. There are more cool differences that you find out by giving it a try.
 
 ## Installation
 
-  Using the node package manager
+Using the node package manager
   
     $ npm install mock.js
 
 ## Quick Start
-
-  Import mock.js functions
-  
-    var $ = require('mock.js');
-      , mock = $.mock
-      , when = $.when
-      , verify = $.verify
-      , any = $.any;
     
-  Let's take the following User class as example
+### Given the following User class
   
     function User(name) {
       this.name = name;
@@ -29,41 +23,118 @@
         return "Nice to meet you " + someone;
       };
     }
+
+### Import some mock.js functions
   
-  Mock an existent object
+    var $ = require('mock.js');
+      , mock = $.mock
+      , when = $.when
+      , verify = $.verify
+      , any = $.any;
+  
+### Mock an existent object
     
     var user = new User('functioncallback');
     var mockedUser = mock(user);
+    
+### Stub a method to return a value
     
     when(mockedUser).toString().thenReturn('Mocked user name');
     
     user.toString();       // returns "User name: functioncallback"
     mockedUser.toString(); // returns "Mocked user name"
   
-  Verify that a method has called twice
+### Verify that a method has called twice
   
-    var mockedUser = mock(new User('functioncallback'));
-    
     mockedUser.toString();
     mockedUser.toString();
     
     verify(mockedUser).toString().twice();
   
-  Match method calls by arguments
+### Match a method call by argument value
   
-    var mockedUser = mock(new User('functioncallback'));
-    
     when(mockedUser).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
     
     mockedUser.meet('foo'); // returns "Hi foo"
     mockedUser.meet('bar'); // fails, as it doesn't match equals('foo')
     
-    // another matching example on the same mock
+### Match a method call by argument type
     
     when(mockedUser).meet(any('number')).thenReturn('Hello, numberic value'); // now it will match any number
     
     mockedUser.meet(123); // returns "Hello, numeric value"
     mockedUser.meet('s'); // fails, as it's not a number
+
+## API
+
+### Functions that you can import
+
+    var $ = require('mock.js')
+    
+      , mock = $.mock
+      , when = $.when
+      , verify = $.verify
+      
+      , any = $.any
+      , a = $.a
+      , an = $.an
+      , matching = $.matching
+      , containing = $.containing
+      , startingWith = $.startingWith
+      , endingWith = $.endingWith
+      , not = $.not
+      , anyOf = $.anyOf
+      , allOf = $.allOf;
+
+### Primary functions
+  
+    mock(object)
+    when(mockedObject)
+    verify(mockedObject)
+  
+### Built-in matchers
+  
+  These functions strict a mock method to be called with arguments according to specific conditions
+  
+  Non-matcher values default to equals(value)
+  
+    any(type)
+    a(Class)
+    an(Class)
+    matching(regex)
+    containing(value)
+    startingWith(value)
+    endingWith(value)
+    not(matcher)
+    anyOf([matcher, ...])
+    allOf([matcher, ...])
+  
+## Functions within contexts
+
+### when(mockedObject).doesSomething()
+  
+  These functions state how a mock method should behave
+  
+  It defaults to return void/undefined
+  
+    thenReturn(value)
+    thenThrow(error)
+    thenCall(callback)
+  
+### verify(mockedObject).hasDoneSomething()
+  
+  These functions verify that a mock method has been called a specific number of times
+  
+  It defaults to allow the function to be called Infinity times
+  
+    never()
+    once()
+    twice()
+    times(n)
+    atLeast(n)
+    atMost(n)
+    between(n1, n2)
+    only()
   
 ## Running Tests
 
@@ -74,52 +145,6 @@
   Then
 
     $ make test
-
-## API
-
-### Primary functions
-  
-    mock(object)
-    when(mockedObject)
-    verify(mockedObject)
-  
-### Functions within when(mockedObject) context
-  
-  These functions tell how a mock method should behave
-  
-    thenReturn(value)
-    thenThrow(error)
-    thenCall(callback)
-  
-### Functions within verify(mockedObject) context
-  
-  These functions verify that a mock method has been called a specific number of times
-  
-    allowing()
-    never()
-    once()
-    twice()
-    times(n)
-    atLeast(n)
-    atMost(n)
-    between(n1, n2)
-    only()
-  
-### Built-in matchers
-  
-  These functions strict a mock method to be called with arguments according to a specific condition
-  
-    equals(value)
-    any(type)
-    a(Class)
-    an(Class)
-    matching(regex)
-    containing(text)
-    startingWith(text)
-    endingWith(text)
-    not(matcher)
-    anyOf([matcher, ...])
-    allOf([matcher, ...])
 
 ## Future directions
 
