@@ -1,2 +1,5 @@
+.gitignore
+Makefile
+Readme.md
 examples
 test
