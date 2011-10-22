@@ -12,23 +12,15 @@ $ = require '../lib/mock'
 it['should mock methods but not other property types'] = ->
 
   mock = $.mock stub.object()
-
-  mock.should.have.property 'get'
-  mock.should.have.property 'set'
-
-  mock['get'].should.be.a 'function'
-  mock['set'].should.be.a 'function'
-
-  mock.should.not.have.property 'bool'
-  mock.should.not.have.property 'number'
-  mock.should.not.have.property 'object'
-  mock.should.not.have.property 'undef'
-  mock.should.not.have.property 'string'
+  methods = ['get', 'set']
+  attributes = ['bool', 'number', 'object', 'undef', 'string']
+  mock.should.have.property p for p in methods
+  mock[p].should.be.a 'function' for p in methods
+  mock.should.not.have.property p for p in attributes
 
 it['should default method return values to undefined'] = ->
 
   mock = $.mock stub.object()
-
   should.strictEqual mock.get(), undefined
   should.strictEqual mock.set(), undefined
 
