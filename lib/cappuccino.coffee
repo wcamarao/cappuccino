@@ -4,11 +4,10 @@
 # MIT Licensed
 #
 
-require 'should'
-
 module.exports = inject: (testModuleExports) ->
 
   api = require './mock'
+  require 'should'
   before = undefined
 
   api.it = (statement, callback) ->
