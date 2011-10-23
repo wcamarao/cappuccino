@@ -1,7 +1,7 @@
 {
   "name": "mock.js",
-  "description": "javascript mocking library built on should.js",
-  "version": "0.0.9",
+  "description": "coffee-script testing toolkit for node.js",
+  "version": "0.0.10",
   "author": "Wagner Montalvao Camarao <functioncallback@gmail.com>",
   "homepage": "https://github.com/functioncallback/mock.js",
   "repository": {
@@ -20,5 +20,5 @@
     "should"        : "0.3.x"
   },
   "devDependencies": {},
-  "main": "lib/mock.js"
+  "main": "lib/mock.coffee"
 }
