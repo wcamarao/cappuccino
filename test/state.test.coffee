@@ -1,22 +1,22 @@
 #
-# mock.js
+# cappuccino
 # Copyright c  2011 Wagner Montalvao Camarao <functioncallback@gmail.com>
 # MIT Licensed
 #
 
-it = module.exports
+$ = require('../lib/cappuccino').inject module.exports
 should = require 'should'
 state = require '../lib/state'
 
-it['should setup an empty state for a mock method'] = ->
+$.it 'should setup an empty state for a mock method', ->
 
   mock = {}
   method = 'get'
   state.bind mock, method
-  should.not.exist state.result(mock, method)
-  should.not.exist state.matcherAt(mock, method, 0)
+  should.not.exist state.result mock, method
+  should.not.exist state.matcherAt mock, method, 0
 
-it['should retrieve methods from a mock'] = ->
+$.it 'should retrieve methods from a mock', ->
 
   mock = {}
   firstMethod = 'getSomething'
@@ -28,7 +28,7 @@ it['should retrieve methods from a mock'] = ->
   methods[0].should.equal firstMethod
   methods[1].should.equal secondMethod
 
-it['should set a result for a mock method'] = ->
+$.it 'should set a result for a mock method', ->
 
   mock = {}
   method = 'get'
@@ -37,7 +37,7 @@ it['should set a result for a mock method'] = ->
   state.setResult mock, method, result
   state.result(mock, method).should.equal result
 
-it['should add matchers for mock method arguments'] = ->
+$.it 'should add matchers for mock method arguments', ->
 
   mock = {}
   method = 'get'
@@ -49,7 +49,7 @@ it['should add matchers for mock method arguments'] = ->
   state.matcherAt(mock, method, 0).should.equal firstMatcher
   state.matcherAt(mock, method, 1).should.equal secondMatcher
 
-it['should count mock method calls'] = ->
+$.it 'should count mock method calls', ->
 
   mock = {}
   method = 'get'

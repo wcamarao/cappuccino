@@ -1,15 +1,14 @@
 #
-# mock.js
+# cappuccino
 # Copyright(c) 2011 Wagner Montalvao Camarao <functioncallback@gmail.com>
 # MIT Licensed
 #
 
-it = module.exports
+$ = require('../lib/cappuccino').inject module.exports
 should = require 'should'
 stub = require './stubs/stub'
-$ = require '../lib/mock'
 
-it['should mock methods but not other property types'] = ->
+$.it 'should mock methods but not other property types', ->
 
   mock = $.mock stub.object()
   methods = ['get', 'set']
@@ -18,13 +17,13 @@ it['should mock methods but not other property types'] = ->
   mock[p].should.be.a 'function' for p in methods
   mock.should.not.have.property p for p in attributes
 
-it['should default method return values to undefined'] = ->
+$.it 'should default method return values to undefined', ->
 
   mock = $.mock stub.object()
   should.strictEqual mock.get(), undefined
   should.strictEqual mock.set(), undefined
 
-it['should diff original, mock and wrapped methods'] = ->
+$.it 'should diff original, mock and wrapped methods', ->
 
   original = stub.object()
   mock = $.mock original

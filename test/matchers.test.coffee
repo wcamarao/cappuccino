@@ -1,15 +1,13 @@
 #
-# mock.js
+# cappuccino
 # Copyright(c) 2011 Wagner Montalvao Camarao <functioncallback@gmail.com>
 # MIT Licensed
 #
 
-it = module.exports
-should = require 'should'
+$ = require('../lib/cappuccino').inject module.exports
 matchers = require '../lib/matchers'
-$ = require '../lib/mock'
 
-it['should identify non-matcher values and wrap them by default with equals matcher'] = ->
+$.it 'should identify non-matcher values and wrap them by default with equals matcher', ->
 
   argument = 'any non-matcher value'
   matcher = matchers.identify argument
@@ -17,7 +15,7 @@ it['should identify non-matcher values and wrap them by default with equals matc
   matcher.expectedValue().should.be.equal argument
   matcher.should.not.be.equal argument
 
-it['should identify matcher values and return themselves'] = ->
+$.it 'should identify matcher values and return themselves', ->
 
   argument = $.any 'object'
   matcher = matchers.identify argument
@@ -25,7 +23,7 @@ it['should identify matcher values and return themselves'] = ->
   matcher.expectedValue().should.not.be.equal argument
   matcher.should.be.equal argument
 
-it['should match equals values'] = ->
+$.it 'should match equals values', ->
 
   givenValue = 'some text'
   otherValue = 'something else'
@@ -33,7 +31,7 @@ it['should match equals values'] = ->
   matcher.mismatches(otherValue).should.be.true
   matcher.mismatches(givenValue).should.not.be.true
 
-it['should match values by same type'] = ->
+$.it 'should match values by same type', ->
 
   anObject = {}
   aNumber = 42
@@ -41,7 +39,7 @@ it['should match values by same type'] = ->
   matcher.mismatches(aNumber).should.be.true
   matcher.mismatches(anObject).should.not.be.true
 
-it['should match values by same class'] = ->
+$.it 'should match values by same class', ->
 
   aDate = new Date()
   aNumber = 42
@@ -52,7 +50,7 @@ it['should match values by same class'] = ->
   matcherAn.mismatches(aNumber).should.be.true
   matcherAn.mismatches(aDate).should.not.be.true
 
-it['should match values by regular expressions'] = ->
+$.it 'should match values by regular expressions', ->
 
   aSlug = 'this-is-a-slug'
   anInvalidSlug = 'but not this'
@@ -60,7 +58,7 @@ it['should match values by regular expressions'] = ->
   matcher.mismatches(anInvalidSlug).should.be.true
   matcher.mismatches(aSlug).should.not.be.true
 
-it['should match values by containing a sub value'] = ->
+$.it 'should match values by containing a sub value', ->
 
   aText = 'it could be a huge text containing dates and reviews'
   anotherText = 'and another one containing only reviews'
@@ -68,7 +66,7 @@ it['should match values by containing a sub value'] = ->
   matcher.mismatches(anotherText).should.be.true
   matcher.mismatches(aText).should.not.be.true
 
-it['should match values by starting with a sub value'] = ->
+$.it 'should match values by starting with a sub value', ->
 
   aText = 'it could be a huge text containing dates and reviews'
   anotherText = 'and another one containing only reviews'
@@ -76,7 +74,7 @@ it['should match values by starting with a sub value'] = ->
   matcher.mismatches(anotherText).should.be.true
   matcher.mismatches(aText).should.not.be.true
 
-it['should match values by ending with a sub value'] = ->
+$.it 'should match values by ending with a sub value', ->
 
   aText = 'it could be a huge text containing dates and reviews'
   anotherText = 'and another one containing only reviews'
@@ -84,7 +82,7 @@ it['should match values by ending with a sub value'] = ->
   matcher.mismatches(anotherText).should.be.true
   matcher.mismatches(aText).should.not.be.true
 
-it['should match values by negating a matcher'] = ->
+$.it 'should match values by negating a matcher', ->
 
   aText = 'it could be a huge text containing dates and reviews'
   anotherText = 'and another one containing only reviews'
@@ -92,7 +90,7 @@ it['should match values by negating a matcher'] = ->
   matcher.mismatches(aText).should.be.true
   matcher.mismatches(anotherText).should.not.be.true
 
-it['should match values by satisfying any matcher'] = ->
+$.it 'should match values by satisfying any matcher', ->
 
   aText = 'it could be a text containing dates'
   anotherText = 'and another one containing reviews'
@@ -100,7 +98,7 @@ it['should match values by satisfying any matcher'] = ->
   matcher.mismatches(aText).should.be.false
   matcher.mismatches(anotherText).should.be.false
 
-it['should match values by satisfying all matchers'] = ->
+$.it 'should match values by satisfying all matchers', ->
 
   aText = 'it could be a huge text containing dates'
   anotherText = 'and a smaller text containing dates'
