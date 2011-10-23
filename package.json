@@ -1,12 +1,12 @@
 {
-  "name": "mock.js",
+  "name": "cappuccino",
   "description": "coffee-script testing toolkit for node.js",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "Wagner Montalvao Camarao <functioncallback@gmail.com>",
-  "homepage": "https://github.com/functioncallback/mock.js",
+  "homepage": "https://github.com/functioncallback/cappuccino",
   "repository": {
     "type": "git",
-    "url": "git://github.com/functioncallback/mock.js.git"
+    "url": "git://github.com/functioncallback/cappuccino.git"
   },
   "scripts": {
     "test": "make test"
@@ -20,5 +20,5 @@
     "should"        : "0.3.x"
   },
   "devDependencies": {},
-  "main": "lib/mock.coffee"
+  "main": "lib/cappuccino.coffee"
 }

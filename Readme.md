@@ -1,14 +1,14 @@
-# mock.js
+# cappuccino
 
-### coffee-script testing toolkit for node.js
+### node.js compliant testing toolkit
 
-  The API is pretty much similar to Mockito, but there are some different aspects as well. It's a bit more lax, as it allows method calls in mocks by default. There are more cool differences that you find out by giving it a try.
+  It puts together expresso, should and a self-contained mocking library, which API is similar to Mockito, but with some different aspects. It's a bit more lax, as it allows method calls in mocks by default. There are more differences that you may find out by giving it a try.
 
 ## Installation
 
 Using the node package manager
 
-    $ npm install mock.js
+    $ npm install cappuccino
 
 ## Quick Start
 
@@ -24,22 +24,28 @@ Using the node package manager
       };
     }
 
-### Import some mock.js functions
+### Import cappuccino
 
-    var $ = require('mock.js');
-      , mock = $.mock
-      , when = $.when
-      , verify = $.verify
-      , any = $.any;
+    var $ = require('cappuccino');
+
+### Write your tests like
+
+    $.before(function () {
+      // this block is executed before each test
+    });
+
+    $.it('should behave like', function () {
+      // your test code here
+    });
 
 ### Mock an existent object
 
     var user = new User('functioncallback');
-    var mockedUser = mock(user);
+    var mockedUser = $.mock(user);
 
 ### Stub a method to return a value
 
-    when(mockedUser).toString().thenReturn('Mocked user name');
+    $.when(mockedUser).toString().thenReturn('Mocked user name');
 
     user.toString();       // returns "User name: functioncallback"
     mockedUser.toString(); // returns "Mocked user name"
@@ -49,18 +55,18 @@ Using the node package manager
     mockedUser.toString();
     mockedUser.toString();
 
-    verify(mockedUser).toString().twice();
+    $.verify(mockedUser).toString().twice();
 
 ### Match a method call by argument value
 
-    when(mockedUser).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
+    $.when(mockedUser).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
 
     mockedUser.meet('foo'); // returns "Hi foo"
     mockedUser.meet('bar'); // fails, as it doesn't match equals('foo')
 
 ### Match a method call by argument type
 
-    when(mockedUser).meet(any('number')).thenReturn('Hello, numberic value'); // now it will match any number
+    $.when(mockedUser).meet($.any('number')).thenReturn('Hello, numberic value'); // now it will match any number
 
     mockedUser.meet(123); // returns "Hello, numeric value"
     mockedUser.meet('s'); // fails, as it's not a number
@@ -69,8 +75,10 @@ Using the node package manager
 
 ### Functions that you can import
 
-    var $ = require('mock.js')
+    var $ = require('cappuccino')
 
+      , it = $.it
+      , before = $.before
       , mock = $.mock
       , when = $.when
       , verify = $.verify
@@ -88,6 +96,8 @@ Using the node package manager
 
 ### Primary functions
 
+    it(statement, callback)
+    before(callback)
     mock(object)
     when(mockedObject)
     verify(mockedObject)
@@ -138,7 +148,7 @@ Using the node package manager
 
 ## Running Tests
 
-  First, [download project source](https://github.com/functioncallback/mock.js/tarball/master) and install dependencies with npm
+  First, [download source](https://github.com/functioncallback/cappuccino/tarball/master) and install dependencies with npm
 
     $ npm install
 
