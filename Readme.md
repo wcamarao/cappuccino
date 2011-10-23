@@ -2,7 +2,7 @@
 
 ### hot mocking library for node.js
 
-  It puts together expresso, should and a self-contained mocking library, which API is similar to Mockito, but with some different aspects. It's a bit more lax, as it allows method calls in mocks by default. There are more differences that you may find out by giving it a try.
+  It puts together expresso, should and a self-contained, AAA mocking library which API is similar to Mockito, but with a few different aspects. For instance, it's a bit more lax, as it allows method calls in mocks by default.
 
 ## Installation
 
@@ -41,35 +41,35 @@ Using the node package manager
 ### Mock an existent object
 
     var user = new User('functioncallback');
-    var mockedUser = $.mock(user);
+    var mock = $.mock(user);
 
 ### Stub a method to return a value
 
-    $.when(mockedUser).toString().thenReturn('Mocked user name');
+    $.when(mock).toString().thenReturn('Mocked user name');
 
-    user.toString();       // returns "User name: functioncallback"
-    mockedUser.toString(); // returns "Mocked user name"
+    user.toString(); // returns "User name: functioncallback"
+    mock.toString(); // returns "Mocked user name"
 
 ### Verify that a method has called twice
 
-    mockedUser.toString();
-    mockedUser.toString();
+    mock.toString();
+    mock.toString();
 
-    $.verify(mockedUser).toString().twice();
+    $.verify(mock).toString().twice();
 
 ### Match a method call by argument value
 
-    $.when(mockedUser).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
+    $.when(mock).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
 
-    mockedUser.meet('foo'); // returns "Hi foo"
-    mockedUser.meet('bar'); // fails, as it doesn't match equals('foo')
+    mock.meet('foo'); // returns "Hi foo"
+    mock.meet('bar'); // fails, as it doesn't match equals('foo')
 
 ### Match a method call by argument type
 
-    $.when(mockedUser).meet($.any('number')).thenReturn('Hello, numberic value'); // now it will match any number
+    $.when(mock).meet($.any('number')).thenReturn('Hello, numberic value'); // now it will match any number
 
-    mockedUser.meet(123); // returns "Hello, numeric value"
-    mockedUser.meet('s'); // fails, as it's not a number
+    mock.meet(123); // returns "Hello, numeric value"
+    mock.meet('s'); // fails, as it's not a number
 
 ## API
 
