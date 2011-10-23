@@ -1,6 +1,6 @@
 # cappuccino
 
-### node.js compliant test toolkit
+### hot mocking library for node.js
 
   It puts together expresso, should and a self-contained mocking library, which API is similar to Mockito, but with some different aspects. It's a bit more lax, as it allows method calls in mocks by default. There are more differences that you may find out by giving it a try.
 
