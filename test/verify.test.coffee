@@ -85,8 +85,7 @@ $.it 'should fail verifying that a method has never been called', ->
   expected = ''
   mocked.get()
   try $.verify(mocked).get().never()
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'never'
 
 $.it 'should fail verifying that a method has been called once', ->
@@ -94,8 +93,7 @@ $.it 'should fail verifying that a method has been called once', ->
   mocked = $.mock stub.object()
   expected = ''
   try $.verify(mocked).get().once()
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'once'
 
 $.it 'should fail verifying that a method has been called twice', ->
@@ -104,8 +102,7 @@ $.it 'should fail verifying that a method has been called twice', ->
   expected = ''
   mocked.get()
   try $.verify(mocked).get().twice()
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'twice'
 
 $.it 'should fail verifying that a method has been called n times', ->
@@ -114,8 +111,7 @@ $.it 'should fail verifying that a method has been called n times', ->
   expected = ''
   mocked.get() for n in [1..2]
   try $.verify(mocked).get().times 3
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal '3 time(s)'
 
 $.it 'should fail verifying that a method has been called at least n times', ->
@@ -124,8 +120,7 @@ $.it 'should fail verifying that a method has been called at least n times', ->
   expected = ''
   mocked.get()
   try $.verify(mocked).get().atLeast 2
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'at least 2 time(s)'
 
 $.it 'should fail verifying that a method has been called at most n times', ->
@@ -134,8 +129,7 @@ $.it 'should fail verifying that a method has been called at most n times', ->
   expected = ''
   mocked.get() for n in [1..2]
   try $.verify(mocked).get().atMost 1
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'at most 1 time(s)'
 
 $.it 'should fail verifying that a method has been called between n1 and n2 times', ->
@@ -145,14 +139,12 @@ $.it 'should fail verifying that a method has been called between n1 and n2 time
   expected = ''
   mocked.get() for n in [1..2]
   try $.verify(mocked).get().between 0, 1
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'between 0 and 1 time(s)'
 
   expected = ''
   try $.verify(mocked).get().between 3, 3
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'between 3 and 3 time(s)'
 
 $.it 'should fail verifying that a method has been the only one called', ->
@@ -161,6 +153,5 @@ $.it 'should fail verifying that a method has been the only one called', ->
   expected = ''
   mocked.get()
   try $.verify(mocked).set().only()
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 'should not call get()'

@@ -35,8 +35,7 @@ $.it 'should stub a method to throw an error', ->
   expected = ''
   $.when(mock).get().thenThrow error
   try mock.get()
-  catch e
-    expected = e
+  catch e then expected = e
   expected.should.be.equal error
 
 $.it 'should stub a method to call a callback', ->

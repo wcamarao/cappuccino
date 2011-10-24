@@ -94,8 +94,7 @@ $.it 'should not match a method call with a wrongly given value', ->
   expected = ''
   $.when(mocked).get(1).thenReturn true
   try mocked.get 2
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal 1
 
 $.it 'should not match a method call with a given value of wrong type', ->
@@ -104,8 +103,7 @@ $.it 'should not match a method call with a given value of wrong type', ->
   expected = ''
   $.when(mocked).get($.any 'object').thenReturn true
   try mocked.get 'a string'
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.any('object').expectedValue()
 
 $.it 'should not match a method call with a given value of wrong class', ->
@@ -114,8 +112,7 @@ $.it 'should not match a method call with a given value of wrong class', ->
   expected = ''
   $.when(mocked).get($.a Date).thenReturn true
   try mocked.get 42
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.a(Date).expectedValue()
 
 $.it 'should not match a method call with a given value not matching a regular expression', ->
@@ -125,8 +122,7 @@ $.it 'should not match a method call with a given value not matching a regular e
   expected = ''
   $.when(mocked).get($.matching slugRegex).thenReturn true
   try mocked.get 'an invalid slug'
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.matching(slugRegex).expectedValue()
 
 $.it 'should not match a method call with a given value not containing a sub value', ->
@@ -136,8 +132,7 @@ $.it 'should not match a method call with a given value not containing a sub val
   expected = ''
   $.when(mocked).get($.containing subValue).thenReturn true
   try mocked.get 'only circles and triangles'
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.containing(subValue).expectedValue()
 
 $.it 'should not match a method call with a given value not starting with a sub value', ->
@@ -147,8 +142,7 @@ $.it 'should not match a method call with a given value not starting with a sub 
   expected = ''
   $.when(mocked).get($.startingWith subValue).thenReturn true
   try mocked.get 'circles, squares, triangles'
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.startingWith(subValue).expectedValue()
 
 $.it 'should not match a method call with a given value not ending with a sub value', ->
@@ -158,8 +152,7 @@ $.it 'should not match a method call with a given value not ending with a sub va
   expected = ''
   $.when(mocked).get($.endingWith subValue).thenReturn true
   try mocked.get 'circles, squares, triangles'
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.endingWith(subValue).expectedValue()
 
 $.it 'should not match method calls by given values failing to not match a criteria', ->
@@ -168,8 +161,7 @@ $.it 'should not match method calls by given values failing to not match a crite
   expected = ''
   $.when(mocked).get($.not $.containing 'triangles').thenReturn true
   try mocked.get('circles, triangles, squares').should.equal true
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.not($.containing 'triangles').expectedValue()
 
 $.it 'should not match method calls by given values failing to match any criteria', ->
@@ -178,8 +170,7 @@ $.it 'should not match method calls by given values failing to match any criteri
   expected = ''
   $.when(mocked).get($.anyOf [ $.startingWith('circles'), $.endingWith 'circles' ]).thenReturn true
   try mocked.get('triangles, circles, squares').should.equal true
-  catch e
-    expected = e.expected
+  catch e then expected = e.expected
   expected.should.be.equal $.anyOf([ $.startingWith('circles'), $.endingWith 'circles' ]).expectedValue()
 
 $.it 'should not match method calls by given values failing to match all criteria', ->
@@ -187,8 +178,6 @@ $.it 'should not match method calls by given values failing to match all criteri
   mocked = $.mock stub.object()
   expected = ''
   $.when(mocked).get($.allOf [ $.startingWith('squares'), $.endingWith 'squares' ]).thenReturn true
-  try
-    mocked.get('squares, triangles').should.equal true
-  catch e
-    expected = e.expected
+  try mocked.get('squares, triangles').should.equal true
+  catch e then expected = e.expected
   expected.should.be.equal $.allOf([ $.startingWith('squares'), $.endingWith 'squares' ]).expectedValue()
