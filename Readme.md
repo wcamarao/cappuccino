@@ -26,7 +26,9 @@ Using the node package manager
 
 ### Import cappuccino
 
-    var $ = require('cappuccino');
+  By injecting your test module.exports into cappuccino, it automatically exports your tests within $.it(statement, callback) to expresso and it allows you to use $.before(callback).
+
+    var $ = require('cappuccino').inject(module.exports);
 
 ### Write your tests like
 
@@ -75,7 +77,7 @@ Using the node package manager
 
 ### Functions that you can import
 
-    var $ = require('cappuccino')
+    var $ = require('cappuccino').inject(module.exports)
 
       , it = $.it
       , before = $.before
@@ -145,6 +147,8 @@ Using the node package manager
     atMost(n)
     between(n1, n2)
     only()
+
+  Note: only() is a bit different - it stricts a method to be the only one called from a given mock.
 
 ## Running Tests
 
