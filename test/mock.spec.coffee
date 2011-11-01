@@ -4,38 +4,46 @@
 # MIT Licensed
 #
 
-$ = require('../lib/cappuccino').inject module.exports
-should = require 'should'
+$ = require '../lib/mock'
 stub = require './stubs/stub'
 
-$.it 'should mock methods but not other property types', ->
+describe 'mock', ->
 
-  mock = $.mock stub.object()
-  methods = ['get', 'set']
-  attributes = ['bool', 'number', 'object', 'undef', 'string']
-  mock.should.have.property p for p in methods
-  mock[p].should.be.a 'function' for p in methods
-  mock.should.not.have.property p for p in attributes
 
-$.it 'should default method return values to undefined', ->
 
-  mock = $.mock stub.object()
-  should.strictEqual mock.get(), undefined
-  should.strictEqual mock.set(), undefined
+  it 'should mock methods but not other property types', ->
 
-$.it 'should diff original, mock and wrapped methods', ->
+    mock = $.mock stub.object()
+    methods = ['get', 'set']
+    attributes = ['bool', 'number', 'object', 'undef', 'string']
+    
+    expect(mock[p]).toBeUndefined for p in attributes
+    expect(mock[p]).toBeDefined() for p in methods
+    expect(typeof mock[p]).toBe 'function' for p in methods
 
-  original = stub.object()
-  mock = $.mock original
-  wrapped =
-    when: $.when mock
-    verify: $.verify mock
 
-  original.get.should.not.equal mock.get
-  original.get.should.not.equal wrapped.when.get
-  original.get.should.not.equal wrapped.verify.get
 
-  mock.get.should.not.equal wrapped.when.get
-  mock.get.should.not.equal wrapped.verify.get
+  it 'should default method return values to undefined', ->
 
-  wrapped.when.get.should.not.equal wrapped.verify.get
+    mock = $.mock stub.object()
+    expect(mock.get()).toBeUndefined()
+    expect(mock.set()).toBeUndefined()
+
+
+
+  it 'should diff original, mock and wrapped methods', ->
+
+    original = stub.object()
+    mock = $.mock original
+    wrapped =
+      when: $.when mock
+      verify: $.verify mock
+
+    expect(original.get).not.toBe mock.get
+    expect(original.get).not.toBe wrapped.when.get
+    expect(original.get).not.toBe wrapped.verify.get
+
+    expect(mock.get).not.toBe wrapped.when.get
+    expect(mock.get).not.toBe wrapped.verify.get
+
+    expect(wrapped.when.get).not.toBe wrapped.verify.get

@@ -4,56 +4,67 @@
 # MIT Licensed
 #
 
-$ = require('../lib/cappuccino').inject module.exports
-should = require 'should'
+$ = require '../lib/mock'
 state = require '../lib/state'
 
-$.it 'should setup an empty state for a mock method', ->
+describe 'state', ->
 
-  mock = {}
-  method = 'get'
-  state.bind mock, method
-  should.not.exist state.result mock, method
-  should.not.exist state.matcherAt mock, method, 0
 
-$.it 'should retrieve methods from a mock', ->
 
-  mock = {}
-  firstMethod = 'getSomething'
-  secondMethod = 'setSomething'
-  state.bind mock, firstMethod
-  state.bind mock, secondMethod
-  methods = state.methods mock
-  methods.length.should.equal 2
-  methods[0].should.equal firstMethod
-  methods[1].should.equal secondMethod
+  it 'should setup an empty state for a mock method', ->
 
-$.it 'should set a result for a mock method', ->
+    mock = {}
+    method = 'get'
+    state.bind mock, method
+    expect(state.result mock, method).toBeUndefined()
+    expect(state.matcherAt mock, method, 0).toBeUndefined()
 
-  mock = {}
-  method = 'get'
-  result = 'result'
-  state.bind mock, method
-  state.setResult mock, method, result
-  state.result(mock, method).should.equal result
 
-$.it 'should add matchers for mock method arguments', ->
 
-  mock = {}
-  method = 'get'
-  firstMatcher = {}
-  secondMatcher = []
-  state.bind mock, method
-  state.addMatcher mock, method, 0, firstMatcher
-  state.addMatcher mock, method, 1, secondMatcher
-  state.matcherAt(mock, method, 0).should.equal firstMatcher
-  state.matcherAt(mock, method, 1).should.equal secondMatcher
+  it 'should retrieve methods from a mock', ->
 
-$.it 'should count mock method calls', ->
+    mock = {}
+    firstMethod = 'getSomething'
+    secondMethod = 'setSomething'
+    state.bind mock, firstMethod
+    state.bind mock, secondMethod
+    methods = state.methods mock
+    expect(methods.length).toBe 2
+    expect(methods[0]).toBe firstMethod
+    expect(methods[1]).toBe secondMethod
 
-  mock = {}
-  method = 'get'
-  state.bind mock, method
-  state.count(mock, method).should.equal 0
-  state.increaseCount mock, method
-  state.count(mock, method).should.equal 1
+
+
+  it 'should set a result for a mock method', ->
+
+    mock = {}
+    method = 'get'
+    result = 'result'
+    state.bind mock, method
+    state.setResult mock, method, result
+    expect(state.result mock, method).toBe result
+
+
+
+  it 'should add matchers for mock method arguments', ->
+
+    mock = {}
+    method = 'get'
+    firstMatcher = {}
+    secondMatcher = []
+    state.bind mock, method
+    state.addMatcher mock, method, 0, firstMatcher
+    state.addMatcher mock, method, 1, secondMatcher
+    expect(state.matcherAt mock, method, 0).toBe firstMatcher
+    expect(state.matcherAt mock, method, 1).toBe secondMatcher
+
+
+
+  it 'should count mock method calls', ->
+
+    mock = {}
+    method = 'get'
+    state.bind mock, method
+    expect(state.count mock, method).toBe 0
+    state.increaseCount mock, method
+    expect(state.count mock, method).toBe 1
