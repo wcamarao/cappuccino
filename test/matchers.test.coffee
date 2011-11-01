@@ -7,7 +7,7 @@
 $ = require('../lib/cappuccino').inject module.exports
 matchers = require '../lib/matchers'
 
-$.it 'should identify non-matcher values and wrap them by default with equals matcher', ->
+$.it 'should handle non-matcher values using default equals matcher', ->
 
   argument = 'any non-matcher value'
   matcher = matchers.identify argument
