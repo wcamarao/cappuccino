@@ -6,8 +6,8 @@
 
 module.exports = (object, functionCallback, attributeCallback) ->
 
-  err = (message) ->
-    throw new Error "filter: invalid #{message}"
+  err = (argument) ->
+    throw new Error "filter: invalid #{argument}"
 
   err 'object' unless typeof object is 'object'
   err 'functionCallback' unless typeof functionCallback is 'function'

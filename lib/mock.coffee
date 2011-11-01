@@ -29,6 +29,6 @@ $.mock = (type) ->
   mock = filter type, expect
 
 unexpectedArgument = (method, expectation, argument, index) ->
-  operator = "#{method}(), argument #{parseInt(index)+1}"
+  operator = "#{method}(), argument #{parseInt index}"
   message = "#{operator}, expected #{expectation}, but actually received #{argument}"
   assert.fail argument, expectation, message, operator
