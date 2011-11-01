@@ -36,14 +36,14 @@ describe 'mock', ->
     original = stub.object()
     mock = $.mock original
     wrapped =
-      when: $.when mock
+      upon: $.upon mock
       verify: $.verify mock
 
     expect(original.get).not.toBe mock.get
-    expect(original.get).not.toBe wrapped.when.get
+    expect(original.get).not.toBe wrapped.upon.get
     expect(original.get).not.toBe wrapped.verify.get
 
-    expect(mock.get).not.toBe wrapped.when.get
+    expect(mock.get).not.toBe wrapped.upon.get
     expect(mock.get).not.toBe wrapped.verify.get
 
-    expect(wrapped.when.get).not.toBe wrapped.verify.get
+    expect(wrapped.upon.get).not.toBe wrapped.verify.get

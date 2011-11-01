@@ -8,7 +8,7 @@ assert = require 'assert'
 filter = require './filter'
 state = require './state'
 $ = module.exports = require './matchers'
-$.when = require './when'
+$.upon = require './upon'
 $.verify = require './verify'
 
 $.mock = (type) ->

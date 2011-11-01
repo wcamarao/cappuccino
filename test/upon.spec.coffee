@@ -7,13 +7,13 @@
 $ = require '../lib/mock'
 stub = require './stubs/stub'
 
-describe 'when', ->
+describe 'upon', ->
 
 
 
-  it 'should wrap methods in when(mock) context', ->
+  it 'should wrap methods in upon(mock) context', ->
 
-    wrapped = $.when $.mock stub.object()
+    wrapped = $.upon $.mock stub.object()
     stubMethods = ['get', 'set']
     expect(wrapped[p]).toBeDefined() for p in stubMethods
     expect(typeof wrapped[p]).toBe 'function' for p in stubMethods
@@ -22,7 +22,7 @@ describe 'when', ->
 
   it 'should provide wrapped methods with results', ->
 
-    results = $.when($.mock stub.object()).get()
+    results = $.upon($.mock stub.object()).get()
     resultMethods = ['thenReturn', 'thenThrow', 'thenCall']
     expect(results[p]).toBeDefined() for p in resultMethods
     expect(typeof results[p]).toBe 'function' for p in resultMethods
@@ -33,7 +33,7 @@ describe 'when', ->
 
     mock = $.mock stub.object()
     expectedValue = 'some text'
-    $.when(mock).get().thenReturn expectedValue
+    $.upon(mock).get().thenReturn expectedValue
     expect(mock.get()).toBe expectedValue
 
 
@@ -43,7 +43,7 @@ describe 'when', ->
     mock = $.mock stub.object()
     error = new Error 'oops'
     expected = ''
-    $.when(mock).get().thenThrow error
+    $.upon(mock).get().thenThrow error
     try mock.get()
     catch e then expected = e
     expect(expected).toBe error
@@ -55,6 +55,6 @@ describe 'when', ->
     expectedNumber = 0
     mock = $.mock stub.object()
     callback = -> expectedNumber++
-    $.when(mock).set().thenCall callback
+    $.upon(mock).set().thenCall callback
     mock.set()
     expect(expectedNumber).toBe 1

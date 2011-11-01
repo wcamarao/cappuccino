@@ -15,7 +15,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     givenValue = 'some text'
-    $.when(mocked).get(givenValue).thenReturn true
+    $.upon(mocked).get(givenValue).thenReturn true
     expect(mocked.get givenValue).toBeTruthy()
 
 
@@ -23,7 +23,7 @@ describe 'integration', ->
   it 'should match method calls by given values of same type verifying with allowing and never', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.any 'object').thenReturn true
+    $.upon(mocked).get($.any 'object').thenReturn true
     expect(mocked.get {}).toBeTruthy()
     expect(mocked.get []).toBeTruthy()
     $.verify(mocked).get().allowing()
@@ -34,7 +34,7 @@ describe 'integration', ->
   it 'should match a method call by a given value of same class verifying once', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.a Date).thenReturn true
+    $.upon(mocked).get($.a Date).thenReturn true
     expect(mocked.get new Date()).toBeTruthy()
     $.verify(mocked).get().once()
 
@@ -43,7 +43,7 @@ describe 'integration', ->
   it 'should match method calls by given values matching a regular expression verifying twice', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.matching /^[a-z0-9-]+$/).thenReturn true
+    $.upon(mocked).get($.matching /^[a-z0-9-]+$/).thenReturn true
     expect(mocked.get 'an-example-of-slug').toBeTruthy()
     expect(mocked.get 'another-example').toBeTruthy()
     $.verify(mocked).get().twice()
@@ -53,7 +53,7 @@ describe 'integration', ->
   it 'should match method calls by given values containing a sub value verifying 3 times', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.containing 'squares').thenReturn true
+    $.upon(mocked).get($.containing 'squares').thenReturn true
     expect(mocked.get 'squares, circles, triangles').toBeTruthy()
     expect(mocked.get 'circles, squares, triangles').toBeTruthy()
     expect(mocked.get 'circles, triangles, squares').toBeTruthy()
@@ -64,7 +64,7 @@ describe 'integration', ->
   it 'should match method calls by given values starting with a sub value verifying with at least', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.startingWith 'circles').thenReturn true
+    $.upon(mocked).get($.startingWith 'circles').thenReturn true
     expect(mocked.get 'circles, squares, triangles').toBeTruthy()
     expect(mocked.get 'circles').toBeTruthy()
     $.verify(mocked).get().atLeast 1
@@ -75,7 +75,7 @@ describe 'integration', ->
   it 'should match method calls by given values ending with a sub value verifying with at most', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.endingWith 'triangles').thenReturn true
+    $.upon(mocked).get($.endingWith 'triangles').thenReturn true
     expect(mocked.get 'circles, squares, triangles').toBeTruthy()
     expect(mocked.get 'triangles').toBeTruthy()
     $.verify(mocked).get().atMost 2
@@ -86,7 +86,7 @@ describe 'integration', ->
   it 'should match method calls by given values not matching a criteria verifying with between', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.not $.containing 'triangles').thenReturn true
+    $.upon(mocked).get($.not $.containing 'triangles').thenReturn true
     expect(mocked.get 'circles, squares').toBeTruthy()
     expect(mocked.get '').toBeTruthy()
     $.verify(mocked).get().between t[0], t[1] for t in [ [1,2], [2,2], [2,3] ]
@@ -96,7 +96,7 @@ describe 'integration', ->
   it 'should match method calls by given values matching any criteria verifying only method called', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.anyOf [ $.startingWith('circles'), $.endingWith 'circles' ]).thenReturn true
+    $.upon(mocked).get($.anyOf [ $.startingWith('circles'), $.endingWith 'circles' ]).thenReturn true
     expect(mocked.get 'circles, squares').toBeTruthy()
     expect(mocked.get 'triangles, circles').toBeTruthy()
     expect(mocked.get 'circles').toBeTruthy()
@@ -107,7 +107,7 @@ describe 'integration', ->
   it 'should match a method call by a given value matching all criteria', ->
 
     mocked = $.mock stub.object()
-    $.when(mocked).get($.allOf [ $.startingWith('squares'), $.endingWith 'squares' ]).thenReturn true
+    $.upon(mocked).get($.allOf [ $.startingWith('squares'), $.endingWith 'squares' ]).thenReturn true
     expect(mocked.get 'squares').toBeTruthy()
 
 
@@ -116,7 +116,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get(1).thenReturn true
+    $.upon(mocked).get(1).thenReturn true
     try mocked.get 2
     catch e then expected = e.expected
     expect(expected).toBe 1
@@ -127,7 +127,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get($.any 'object').thenReturn true
+    $.upon(mocked).get($.any 'object').thenReturn true
     try mocked.get 'a string'
     catch e then expected = e.expected
     expect(expected).toBe $.any('object').expectedValue()
@@ -138,7 +138,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get($.a Date).thenReturn true
+    $.upon(mocked).get($.a Date).thenReturn true
     try mocked.get 42
     catch e then expected = e.expected
     expect(expected).toBe $.a(Date).expectedValue()
@@ -150,7 +150,7 @@ describe 'integration', ->
     mocked = $.mock stub.object()
     slugRegex = /^[a-z0-9-]+$/
     expected = ''
-    $.when(mocked).get($.matching slugRegex).thenReturn true
+    $.upon(mocked).get($.matching slugRegex).thenReturn true
     try mocked.get 'an invalid slug'
     catch e then expected = e.expected
     expect(expected).toBe $.matching(slugRegex).expectedValue()
@@ -162,7 +162,7 @@ describe 'integration', ->
     mocked = $.mock stub.object()
     subValue = 'squares'
     expected = ''
-    $.when(mocked).get($.containing subValue).thenReturn true
+    $.upon(mocked).get($.containing subValue).thenReturn true
     try mocked.get 'only circles and triangles'
     catch e then expected = e.expected
     expect(expected).toBe $.containing(subValue).expectedValue()
@@ -174,7 +174,7 @@ describe 'integration', ->
     mocked = $.mock stub.object()
     subValue = 'squares'
     expected = ''
-    $.when(mocked).get($.startingWith subValue).thenReturn true
+    $.upon(mocked).get($.startingWith subValue).thenReturn true
     try mocked.get 'circles, squares, triangles'
     catch e then expected = e.expected
     expect(expected).toBe $.startingWith(subValue).expectedValue()
@@ -186,7 +186,7 @@ describe 'integration', ->
     mocked = $.mock stub.object()
     subValue = 'squares'
     expected = ''
-    $.when(mocked).get($.endingWith subValue).thenReturn true
+    $.upon(mocked).get($.endingWith subValue).thenReturn true
     try mocked.get 'circles, squares, triangles'
     catch e then expected = e.expected
     expect(expected).toBe $.endingWith(subValue).expectedValue()
@@ -197,7 +197,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get($.not $.containing 'triangles').thenReturn true
+    $.upon(mocked).get($.not $.containing 'triangles').thenReturn true
     try mocked.get 'circles, triangles, squares'
     catch e then expected = e.expected
     expect(expected).toBe $.not($.containing 'triangles').expectedValue()
@@ -208,7 +208,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get($.anyOf [ $.startingWith('circles'), $.endingWith 'circles' ]).thenReturn true
+    $.upon(mocked).get($.anyOf [ $.startingWith('circles'), $.endingWith 'circles' ]).thenReturn true
     try mocked.get 'triangles, circles, squares'
     catch e then expected = e.expected
     expect(expected).toBe $.anyOf([ $.startingWith('circles'), $.endingWith 'circles' ]).expectedValue()
@@ -219,7 +219,7 @@ describe 'integration', ->
 
     mocked = $.mock stub.object()
     expected = ''
-    $.when(mocked).get($.allOf [ $.startingWith('squares'), $.endingWith 'squares' ]).thenReturn true
+    $.upon(mocked).get($.allOf [ $.startingWith('squares'), $.endingWith 'squares' ]).thenReturn true
     try mocked.get 'squares, triangles'
     catch e then expected = e.expected
     expect(expected).toBe $.allOf([ $.startingWith('squares'), $.endingWith 'squares' ]).expectedValue()
