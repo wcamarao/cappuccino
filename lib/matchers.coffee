@@ -32,10 +32,17 @@ matching = (regex, expectedValue) ->
   new Matcher expectedValue, (actualValue) ->
     not actualValue.match regex
 
-matchers.matching = (regex) -> matching regex, "matching #{regex}"
-matchers.containing = (value) -> matching new RegExp(value, 'i'), "containing #{value}"
-matchers.startingWith = (value) -> matching new RegExp("^#{value}", 'i'), "starting with #{value}"
-matchers.endingWith = (value) -> matching new RegExp("#{value}$", 'i'), "ending with #{value}"
+matchers.matching = (regex) ->
+  matching regex, "matching #{regex}"
+
+matchers.containing = (value) ->
+  matching new RegExp(value, 'i'), "containing #{value}"
+
+matchers.startingWith = (value) ->
+  matching new RegExp("^#{value}", 'i'), "starting with #{value}"
+
+matchers.endingWith = (value) ->
+  matching new RegExp("#{value}$", 'i'), "ending with #{value}"
 
 matchers.not = (matcher) ->
   new Matcher "not #{matcher.expectedValue()}", (actualValue) ->
