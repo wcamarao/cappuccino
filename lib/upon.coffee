@@ -4,11 +4,10 @@
 # MIT Licensed
 #
 
-matchers = require './matchers'
 filter = require './filter'
 state = require './state'
 
-module.exports = (mock) ->
+global.upon = (mock) ->
 
   wrap = (upon, method) ->
     wrappedMethod = ->
@@ -16,7 +15,7 @@ module.exports = (mock) ->
       results method
 
   addMatchers = (method, parameters) ->
-    state.addMatcher mock, method, index, matchers.identify(p) for p, index in parameters
+    state.addMatcher mock, method, index, match.identify(p) for p, index in parameters
 
   results = (method) ->
 

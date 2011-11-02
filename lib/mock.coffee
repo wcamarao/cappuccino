@@ -7,11 +7,12 @@
 assert = require 'assert'
 filter = require './filter'
 state = require './state'
-$ = module.exports = require './matchers'
-$.upon = require './upon'
-$.verify = require './verify'
 
-$.mock = (type) ->
+require './upon'
+require './matchers'
+require './verify'
+
+global.mock = (type) ->
 
   match = (method, parameters) ->
     for parameter, index in parameters
