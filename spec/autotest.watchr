@@ -1,6 +1,6 @@
 def test
   system('clear')
-  system("make test")
+  system("make spec")
 end
 
 watch('^(bin/(.*))') { |m| test }
