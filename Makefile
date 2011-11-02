@@ -1,9 +1,9 @@
-test:
+spec:
 
-	@./bin/cappuccino --coffee --color --verbose test
+	@./bin/cappuccino --coffee --color --verbose spec
 
 watch:
 
-	@watchr test/autotest.watchr
+	@watchr spec/autotest.watchr
 
-.PHONY: test
+.PHONY: spec

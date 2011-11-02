@@ -1,6 +1,6 @@
 {
   "name": "cappuccino"
- ,"description": "hot mocking library"
+ ,"description": "hot mocking library on jasmine and node.js"
  ,"version": "0.0.12"
  ,"author": "Wagner Montalvao Camarao <functioncallback@gmail.com>"
  ,"homepage": "https://github.com/functioncallback/cappuccino"
@@ -9,7 +9,7 @@
    ,"url": "git://github.com/functioncallback/cappuccino.git"
   }
  ,"scripts": {
-    "test": "make test"
+    "test": "make spec"
   }
  ,"engines": {
     "node": "0.4.x"
