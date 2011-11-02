@@ -1,5 +1,9 @@
 test:
 
-	@./node_modules/jasmine-node/bin/jasmine-node --coffee --color --verbose test
+	@./bin/cappuccino --coffee --color --verbose test
+
+watch:
+
+	@watchr autotest.watchr
 
 .PHONY: test
