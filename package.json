@@ -1,24 +1,26 @@
 {
-  "name": "cappuccino"
- ,"description": "hot mocking library on jasmine and node.js"
- ,"version": "0.0.12"
- ,"author": "Wagner Montalvao Camarao <functioncallback@gmail.com>"
- ,"homepage": "https://github.com/functioncallback/cappuccino"
- ,"repository": {
-    "type": "git"
-   ,"url": "git://github.com/functioncallback/cappuccino.git"
-  }
- ,"scripts": {
+  "name": "cappuccino",
+  "description": "hot mocking library on jasmine and node.js",
+  "version": "0.0.13",
+  "author": "Wagner Montalvao Camarao <functioncallback@gmail.com>",
+  "homepage": "https://github.com/functioncallback/cappuccino",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/functioncallback/cappuccino.git"
+  },
+  "scripts": {
     "test": "make spec"
-  }
- ,"engines": {
+  },
+  "engines": {
     "node": "0.4.x"
-  }
- ,"dependencies": {
-    "coffee-script" : "1.1.x"
-   ,"jasmine-node"  : "1.0.x"
-  }
- ,"devDependencies": {}
- ,"bin" : "bin/cappuccino"
- ,"main": "lib/mock.coffee"
+  },
+  "dependencies": {
+    "coffee-script": "1.1.x",
+    "jasmine-node": "1.0.x"
+  },
+  "devDependencies": {},
+  "bin": {
+    "cappuccino": "bin/cappuccino"
+  },
+  "main": "lib/mock.coffee"
 }
