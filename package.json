@@ -19,5 +19,6 @@
    ,"jasmine-node"  : "1.0.x"
   }
  ,"devDependencies": {}
+ ,"bin" : "bin/cappuccino"
  ,"main": "lib/mock.coffee"
 }
