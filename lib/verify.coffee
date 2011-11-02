@@ -8,7 +8,7 @@ assert = require 'assert'
 filter = require './filter'
 state = require './state'
 
-module.exports = (mock) ->
+global.verify = (mock) ->
 
   wrap = (verify, method) ->
     wrappedMethod = () ->

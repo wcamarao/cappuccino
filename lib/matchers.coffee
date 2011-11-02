@@ -4,7 +4,8 @@
 # MIT Licensed
 #
 
-matchers = module.exports
+matchers = global.match = {}
+
 matchers.Matcher = class Matcher
   constructor: (@value, @mismatches) ->
   expectedValue: -> @value
