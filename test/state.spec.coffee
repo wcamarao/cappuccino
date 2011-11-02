@@ -4,9 +4,10 @@
 # MIT Licensed
 #
 
-describe 'state', ->
+$ = require '../lib/mock'
+state = require '../lib/state'
 
-  state = require '../lib/state'
+describe 'state', ->
 
 
 

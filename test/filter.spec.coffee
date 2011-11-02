@@ -4,10 +4,10 @@
 # MIT Licensed
 #
 
-describe 'filter', ->
+filter = require '../lib/filter'
+stub = require './stubs/stub'
 
-  filter = require '../lib/filter'
-  stub = require './stubs/stub'
+describe 'filter', ->
 
 
 

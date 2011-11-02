@@ -1,5 +1,0 @@
-#!/usr/bin/env node
-
-require('coffee-script');
-require('../lib/mock');
-require('../node_modules/jasmine-node/bin/jasmine-node');

@@ -4,6 +4,9 @@
 # MIT Licensed
 #
 
+$ = require '../lib/mock'
+matchers = require '../lib/matchers'
+
 describe 'matchers', ->
 
 
@@ -11,8 +14,8 @@ describe 'matchers', ->
   it 'should handle non-matcher values using default equals matcher', ->
 
     argument = 'any non-matcher value'
-    matcher = match.identify argument
-    expect(matcher instanceof match.Matcher).toBeTruthy()
+    matcher = matchers.identify argument
+    expect(matcher instanceof matchers.Matcher).toBeTruthy()
     expect(matcher.expectedValue()).toBe argument
     expect(matcher).not.toBe argument
 
@@ -20,9 +23,9 @@ describe 'matchers', ->
 
   it 'should identify matcher values and return themselves', ->
 
-    argument = match.any 'object'
-    matcher = match.identify argument
-    expect(matcher instanceof match.Matcher).toBeTruthy()
+    argument = $.any 'object'
+    matcher = matchers.identify argument
+    expect(matcher instanceof matchers.Matcher).toBeTruthy()
     expect(matcher.expectedValue()).not.toBe argument
     expect(matcher).toBe argument
 
@@ -32,7 +35,7 @@ describe 'matchers', ->
 
     givenValue = 'some text'
     otherValue = 'something else'
-    matcher = match.identify givenValue
+    matcher = matchers.identify givenValue
     expect(matcher.mismatches otherValue).toBeTruthy()
     expect(matcher.mismatches givenValue).toBeFalsy()
 
@@ -42,7 +45,7 @@ describe 'matchers', ->
 
     anObject = {}
     aNumber = 42
-    matcher = match.identify match.any 'object'
+    matcher = matchers.identify $.any 'object'
     expect(matcher.mismatches aNumber).toBeTruthy()
     expect(matcher.mismatches anObject).toBeFalsy()
 
@@ -52,8 +55,8 @@ describe 'matchers', ->
 
     aDate = new Date()
     aNumber = 42
-    matcherA = match.identify match.a Date
-    matcherAn = match.identify match.an Date
+    matcherA = matchers.identify $.a Date
+    matcherAn = matchers.identify $.an Date
     expect(matcherA.mismatches aNumber).toBeTruthy()
     expect(matcherA.mismatches aDate).toBeFalsy()
     expect(matcherAn.mismatches aNumber).toBeTruthy()
@@ -65,7 +68,7 @@ describe 'matchers', ->
 
     aSlug = 'this-is-a-slug'
     anInvalidSlug = 'but not this'
-    matcher = match.identify match.matching /^[a-z0-9-]+$/
+    matcher = matchers.identify $.matching /^[a-z0-9-]+$/
     expect(matcher.mismatches anInvalidSlug).toBeTruthy()
     expect(matcher.mismatches aSlug).toBeFalsy()
 
@@ -75,7 +78,7 @@ describe 'matchers', ->
 
     aText = 'it could be a huge text containing dates and reviews'
     anotherText = 'and another one containing only reviews'
-    matcher = match.identify match.containing 'dates'
+    matcher = matchers.identify $.containing 'dates'
     expect(matcher.mismatches anotherText).toBeTruthy()
     expect(matcher.mismatches aText).toBeFalsy()
 
@@ -85,7 +88,7 @@ describe 'matchers', ->
 
     aText = 'it could be a huge text containing dates and reviews'
     anotherText = 'and another one containing only reviews'
-    matcher = match.identify match.startingWith 'it could be'
+    matcher = matchers.identify $.startingWith 'it could be'
     expect(matcher.mismatches anotherText).toBeTruthy()
     expect(matcher.mismatches aText).toBeFalsy()
 
@@ -95,7 +98,7 @@ describe 'matchers', ->
 
     aText = 'it could be a huge text containing dates and reviews'
     anotherText = 'and another one containing only reviews'
-    matcher = match.identify match.endingWith 'and reviews'
+    matcher = matchers.identify $.endingWith 'and reviews'
     expect(matcher.mismatches anotherText).toBeTruthy()
     expect(matcher.mismatches aText).toBeFalsy()
 
@@ -105,7 +108,7 @@ describe 'matchers', ->
 
     aText = 'it could be a huge text containing dates and reviews'
     anotherText = 'and another one containing only reviews'
-    matcher = match.identify match.not match.containing 'dates'
+    matcher = matchers.identify $.not $.containing 'dates'
     expect(matcher.mismatches aText).toBeTruthy()
     expect(matcher.mismatches anotherText).toBeFalsy()
 
@@ -115,7 +118,7 @@ describe 'matchers', ->
 
     aText = 'it could be a text containing dates'
     anotherText = 'and another one containing reviews'
-    matcher = match.identify match.anyOf [ match.containing('dates'), match.containing 'reviews' ]
+    matcher = matchers.identify $.anyOf [ $.containing('dates'), $.containing 'reviews' ]
     expect(matcher.mismatches aText).toBeFalsy()
     expect(matcher.mismatches anotherText).toBeFalsy()
 
@@ -125,6 +128,6 @@ describe 'matchers', ->
 
     aText = 'it could be a huge text containing dates'
     anotherText = 'and a smaller text containing dates'
-    matcher = match.identify match.allOf [ match.containing('text'), match.endingWith 'dates' ]
+    matcher = matchers.identify $.allOf [ $.containing('text'), $.endingWith 'dates' ]
     expect(matcher.mismatches aText).toBeFalsy()
     expect(matcher.mismatches anotherText).toBeFalsy()
