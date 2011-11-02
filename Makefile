@@ -4,6 +4,6 @@ spec:
 
 watch:
 
-	@watchr spec/autotest.watchr
+	@watchr spec/support/autotest.watchr
 
 .PHONY: spec

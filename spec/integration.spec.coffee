@@ -6,7 +6,7 @@
 
 describe 'integration', ->
 
-  stub = require './stubs/stub'
+  stub = require './support/stub'
 
 
 

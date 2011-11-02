@@ -7,7 +7,7 @@
 describe 'filter', ->
 
   filter = require '../lib/filter'
-  stub = require './stubs/stub'
+  stub = require './support/stub'
 
 
 

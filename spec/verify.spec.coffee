@@ -6,7 +6,7 @@
 
 describe 'verify', ->
 
-  stub = require './stubs/stub'
+  stub = require './support/stub'
 
 
 

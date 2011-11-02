@@ -6,7 +6,7 @@
 
 describe 'upon', ->
 
-  stub = require './stubs/stub'
+  stub = require './support/stub'
 
 
 

@@ -6,7 +6,7 @@
 
 describe 'mock', ->
 
-  stub = require './stubs/stub'
+  stub = require './support/stub'
 
 
 
