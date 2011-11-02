@@ -4,6 +4,6 @@ test:
 
 watch:
 
-	@watchr autotest.watchr
+	@watchr test/autotest.watchr
 
 .PHONY: test
