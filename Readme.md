@@ -1,8 +1,12 @@
 # cappuccino
 
-### hot mocking library for node.js
+### hot mocking library on jasmine and node.js
 
-  It puts together expresso, should and a self-contained, AAA mocking library which API is similar to Mockito, but with a few different aspects. For instance, it's a bit more lax, as it allows method calls in mocks by default.
+  It's built on [jasmine](http://pivotal.github.com/jasmine) and [node.js](http://nodejs.org), using the Arrange-Act-Assert pattern and extending [jasmine-node](https://github.com/mhevery/jasmine-node) for running tests from command-line.
+
+## How it works
+
+  You still write your jasmine specs, but by running them with cappuccino, it loads its mocking functions into the same context that jasmine has its testing functions, then it runs your specs with jasmine-node.
 
 ## Installation
 
@@ -24,89 +28,64 @@ Using the node package manager
       };
     }
 
-### Import cappuccino
+### Write a jasmine spec
 
-  By injecting your test module.exports into cappuccino, it automatically exports your tests within $.it(statement, callback) to expresso and it allows you to use $.before(callback).
-
-    var $ = require('cappuccino').inject(module.exports);
-
-### Write your tests like
-
-    $.before(function () {
-      // this block is executed before each test
-    });
-
-    $.it('should behave like', function () {
-      // your test code here
+    describe('User meetings', function () {
+      it('should meet people like', function () {
+        // ...
+      });
     });
 
 ### Mock an existent object
 
     var user = new User('functioncallback');
-    var mock = $.mock(user);
+    var mockedUser = mock(user);
 
 ### Stub a method to return a value
 
-    $.when(mock).toString().thenReturn('Mocked user name');
+    upon(mockedUser).toString().thenReturn('Mocked user name');
 
     user.toString(); // returns "User name: functioncallback"
-    mock.toString(); // returns "Mocked user name"
+    mockedUser.toString(); // returns "Mocked user name"
 
 ### Verify that a method has called twice
 
-    mock.toString();
-    mock.toString();
+    mockedUser.toString();
+    mockedUser.toString();
 
-    $.verify(mock).toString().twice();
+    verify(mockedUser).toString().twice();
 
 ### Match a method call by argument value
 
-    $.when(mock).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
+    upon(mockedUser).meet('foo').thenReturn('Hi foo'); // here, meet('foo') defaults to match equals('foo')
 
-    mock.meet('foo'); // returns "Hi foo"
-    mock.meet('bar'); // fails, as it doesn't match equals('foo')
+    mockedUser.meet('foo'); // returns "Hi foo"
+    mockedUser.meet('bar'); // fails, as it doesn't match equals('foo')
 
 ### Match a method call by argument type
 
-    $.when(mock).meet($.any('number')).thenReturn('Hello, numberic value'); // now it will match any number
+    upon(mockedUser).meet(match.any('number')).thenReturn('Hello, numberic value'); // now it will match any number
 
-    mock.meet(123); // returns "Hello, numeric value"
-    mock.meet('s'); // fails, as it's not a number
+    mockedUser.meet(123); // returns "Hello, numeric value"
+    mockedUser.meet('s'); // fails, as it's not a number
+
+### Run your specs with cappuccino
+
+  Any parameter that you provide will be passed along to jasmine-node, so you can run your specs like:
+
+    $ ./node_modules/cappuccino/bin/cappuccino --coffee --color --verbose spec
 
 ## API
 
-### Functions that you can import
-
-    var $ = require('cappuccino').inject(module.exports)
-
-      , it = $.it
-      , before = $.before
-      , mock = $.mock
-      , when = $.when
-      , verify = $.verify
-
-      , any = $.any
-      , a = $.a
-      , an = $.an
-      , matching = $.matching
-      , containing = $.containing
-      , startingWith = $.startingWith
-      , endingWith = $.endingWith
-      , not = $.not
-      , anyOf = $.anyOf
-      , allOf = $.allOf;
-
 ### Primary functions
 
-    it(statement, callback)
-    before(callback)
     mock(object)
-    when(mockedObject)
+    upon(mockedObject)
     verify(mockedObject)
 
 ### Built-in matchers
 
-  These functions strict a mock method to be called with arguments according to specific conditions
+  These functions strict a mock method to be called with arguments according to specific conditions. They are available under the match object, so you should use match.any(type) or match.a(Class) for example.
 
   Non-matcher values default to equals(value)
 
@@ -123,7 +102,7 @@ Using the node package manager
 
 ## Functions within contexts
 
-### when(mockedObject).doesSomething()
+### upon(mockedObject).doesSomething()
 
   These functions state how a mock method should behave
 
@@ -150,7 +129,7 @@ Using the node package manager
 
   Note: only() is a bit different - it stricts a method to be the only one called from a given mock.
 
-## Running Tests
+## Running cappuccino specs
 
   First, [download source](https://github.com/functioncallback/cappuccino/tarball/master) and install dependencies with npm
 
@@ -160,11 +139,12 @@ Using the node package manager
 
     $ make test
 
+  If you have [watchr](https://github.com/mynyml/watchr), you may run 'make watch' to observe changes to source files and keep tests running automatically.
+
 ## Future directions
 
   Verification in order<br>
   API to extend matchers<br>
-  Spy objects<br>
 
 ## License
 
