@@ -2,7 +2,7 @@
 
 ### hot mocking library on jasmine and node.js
 
-  It's built on [jasmine](http://pivotal.github.com/jasmine) and [node.js](http://nodejs.org), using the Arrange-Act-Assert pattern and extending [jasmine-node](https://github.com/mhevery/jasmine-node) for running tests from command-line.
+  It's built on [jasmine](http://pivotal.github.com/jasmine) and [node.js](http://nodejs.org), using the Arrange-Act-Assert pattern and extending [jasmine-node](https://github.com/mhevery/jasmine-node) for running specs from command-line.
 
 ## How it works
 
@@ -137,9 +137,9 @@ Using the node package manager
 
   Then
 
-    $ make test
+    $ make spec
 
-  If you have [watchr](https://github.com/mynyml/watchr), you may run 'make watch' to observe changes to source files and keep tests running automatically.
+  If you have [watchr](https://github.com/mynyml/watchr), you may run 'make watch' to observe changes to source files and keep specs running automatically.
 
 ## Future directions
 
