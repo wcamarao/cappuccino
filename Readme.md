@@ -6,7 +6,20 @@
 
 ## How it works
 
-  You still write your jasmine specs, but by running them with cappuccino, it loads its mocking functions into the same context that jasmine has its testing functions, then it runs your specs with jasmine-node.
+  You still write your jasmine specs, but by running them with cappuccino, it loads its mocking functions into the same context that jasmine has its testing functions, then it runs your specs with jasmine-node. Provided parameters will be passed along, so you can run your specs like:
+
+    $ ./node_modules/cappuccino/bin/cappuccino [options] directory
+
+  Options:
+
+    --color            - use color coding for output
+    --noColor          - do not use color coding for output
+    -m, --match REGEXP - load only specs containing "REGEXPspec"
+    -i, --include DIR  - add given directory to node include paths
+    --verbose          - print extra information per each test run
+    --coffee           - load coffee-script which allows execution .coffee files
+    --junitreport      - export tests results as junitreport xml format
+    --teamcity         - converts all console output to teamcity custom test runner commands. (Normally auto detected.)
 
 ## Installation
 
@@ -16,17 +29,19 @@ Using the node package manager
 
 ## Quick Start
 
-### Given the following User class
+### Given the following User prototype
 
     function User(name) {
       this.name = name;
-      this.toString = function() {
-        return "User name: " + this.name;
-      };
-      this.meet = function(someone) {
-        return "Nice to meet you " + someone;
-      };
     }
+
+    User.prototype.toString = function() {
+      return "User name: " + this.name;
+    };
+
+    User.prototype.meet = function(someone) {
+      return "Nice to meet you " + someone;
+    };
 
 ### Write a jasmine spec
 
@@ -139,7 +154,7 @@ Using the node package manager
 
     $ make spec
 
-  If you have [watchr](https://github.com/mynyml/watchr), you may run 'make watch' to observe changes to source files and keep specs running automatically.
+  If you have [watchr](https://github.com/mynyml/watchr), you may run "make watch" to observe changes to source files and keep specs running automatically.
 
 ## Future directions
 
