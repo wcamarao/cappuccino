@@ -2,4 +2,12 @@
 
 require('coffee-script');
 require('../lib/mock');
-require('../node_modules/jasmine-node/bin/jasmine-node');
+try {
+  require('../node_modules/jasmine-node/bin/jasmine-node');
+} catch (e) {
+  try {
+    require('../../../node_modules/jasmine-node/bin/jasmine-node');
+  } catch (e) {
+    throw new Error('jasmine-node module not found')
+  }
+}
