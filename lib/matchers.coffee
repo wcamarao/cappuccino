@@ -17,13 +17,13 @@ matchers.equals = (expectedValue) ->
   new Matcher expectedValue, (actualValue) ->
     expectedValue isnt actualValue;
 
-matchers.any = (type) ->
-  new Matcher "any #{type}", (actualValue) ->
-    typeof actualValue isnt type
+matchers.any = (expectedType) ->
+  new Matcher "any #{expectedType}", (actualValue) ->
+    typeof actualValue isnt expectedType
 
-instanceOf = (prefix) -> (Class) ->
-  new Matcher prefix + Class, (actualValue) ->
-    actualValue not instanceof Class
+instanceOf = (prefix) -> (expectedClass) ->
+  new Matcher prefix + expectedClass, (actualValue) ->
+    actualValue not instanceof expectedClass
 
 matchers.a = instanceOf 'a '
 matchers.an = instanceOf 'an '
