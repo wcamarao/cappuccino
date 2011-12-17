@@ -11,18 +11,20 @@ state.indexes = []
 state.metadata = []
 
 lookup = (mock) ->
-  index = state.indexes.indexOf mock
-  if index is -1
+  if (i = state.indexes.indexOf mock) >= 0
+    state.metadata[i]
+  else
     metadata = {}
     state.indexes.push mock
     state.metadata.push metadata
     metadata
-  else
-    state.metadata[index]
+
+api.init = (mock) ->
+  metadata = lookup mock
+  metadata.methods = []
 
 api.bind = (mock, method) ->
   metadata = lookup mock
-  metadata.methods = metadata.methods or []
   metadata.methods.push method
   metadata[method] = {}
   metadata[method].count = 0
