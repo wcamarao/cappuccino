@@ -21,10 +21,9 @@ matchers.any = (type) ->
   new Matcher "any #{type}", (actualValue) ->
     typeof actualValue isnt type
 
-instanceOf = (alias) ->
-  (Class) ->
-    new Matcher alias + Class, (actualValue) ->
-      actualValue not instanceof Class
+instanceOf = (prefix) -> (Class) ->
+  new Matcher prefix + Class, (actualValue) ->
+    actualValue not instanceof Class
 
 matchers.a = instanceOf 'a '
 matchers.an = instanceOf 'an '
