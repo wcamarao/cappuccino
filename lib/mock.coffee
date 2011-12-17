@@ -18,7 +18,7 @@ global.mock = (type) ->
     for parameter, index in parameters
       matcher = state.matcherAt mock, method, index
       if matcher?.mismatches(parameter)
-        unexpectedArgument method, matcher.expectedValue(), parameter, index
+        fail method, matcher.expectedValue(), parameter, index
     state.increaseCount mock, method
 
   expect = (mock, method) ->
@@ -29,7 +29,7 @@ global.mock = (type) ->
 
   mock = filter type, expect
 
-unexpectedArgument = (method, expectation, argument, index) ->
+fail = (method, expectation, argument, index) ->
   operator = "#{method}(), argument #{parseInt index}"
   message = "#{operator}, expected #{expectation}, but actually received #{argument}"
   assert.fail argument, expectation, message, operator
