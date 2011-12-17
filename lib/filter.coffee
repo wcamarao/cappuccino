@@ -4,21 +4,20 @@
 # MIT Licensed
 #
 
-module.exports = (object, functionCallback, attributeCallback) ->
+module.exports = (object, methodCallback, attributeCallback) ->
 
-  err = (argument) ->
-    throw new Error "filter: invalid #{argument}"
+  e = (arg) -> throw new Error "filter: invalid #{arg} argument"
 
-  err 'object' unless typeof object is 'object'
-  err 'functionCallback' unless typeof functionCallback is 'function'
-  err 'attributeCallback' unless typeof attributeCallback is 'undefined' or typeof attributeCallback is 'function'
+  e 'object' unless typeof object is 'object'
+  e 'methodCallback' unless typeof methodCallback is 'function'
+  e 'attributeCallback' unless typeof attributeCallback is 'function' or typeof attributeCallback is 'undefined'
 
   mock = {}
 
   for property of object
 
     if typeof object[property] is 'function'
-      mock[property] = functionCallback mock, property
+      mock[property] = methodCallback mock, property
 
     else if typeof attributeCallback is 'function'
       mock[property] = attributeCallback mock, property
