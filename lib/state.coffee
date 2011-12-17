@@ -19,12 +19,9 @@ lookup = (mock) ->
     state.metadata.push metadata
     metadata
 
-api.init = (mock) ->
-  metadata = lookup mock
-  metadata.methods = []
-
 api.bind = (mock, method) ->
   metadata = lookup mock
+  metadata.methods = metadata.methods or []
   metadata.methods.push method
   metadata[method] = {}
   metadata[method].count = 0
