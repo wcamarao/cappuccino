@@ -11,12 +11,12 @@ state = require './state'
 global.verify = (mock) ->
 
   wrap = (verify, method) ->
-    wrappedMethod = () ->
+    wrappedMethod = ->
       verifications method
 
   verifications = (method) ->
 
-    getCount = () ->
+    getCount = ->
       state.count mock, method
 
     fail = (expected) ->
@@ -28,11 +28,11 @@ global.verify = (mock) ->
 
     verifications =
 
-      allowing: () ->
+      allowing: ->
 
-      never: () -> @times 0, 'never'
-      once:  () -> @times 1, 'once'
-      twice: () -> @times 2, 'twice'
+      never: -> @times 0, 'never'
+      once:  -> @times 1, 'once'
+      twice: -> @times 2, 'twice'
 
       times: (n, message) ->
         fail message or n+' time(s)' unless getCount() is n
@@ -47,7 +47,7 @@ global.verify = (mock) ->
         count = getCount()
         fail "between #{n1} and #{n2} time(s)" unless count >= n1 and count <= n2
 
-      only: () ->
+      only: ->
         state.methods(mock).forEach (m) ->
           if method isnt m and state.count(mock, m) isnt 0
             message = "#{m}() should not be called, since it should call only #{method}()"
