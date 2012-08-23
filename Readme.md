@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/functioncallback/cappuccino.png)](http://travis-ci.org/functioncallback/cappuccino)
 # cappuccino
 
 ### hot mocking library on jasmine and node.js
