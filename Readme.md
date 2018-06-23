@@ -2,7 +2,7 @@
 
 ### hot mocking library on jasmine and node.js
 
-  It's built on [jasmine](http://pivotal.github.com/jasmine) and [node.js](http://nodejs.org), using the Arrange-Act-Assert pattern and extending [jasmine-node](https://github.com/mhevery/jasmine-node) for running specs from command-line.
+  It's built on [jasmine](https://jasmine.github.io/) and [node.js](http://nodejs.org), using the Arrange-Act-Assert pattern and extending [jasmine-node](https://github.com/mhevery/jasmine-node) for running specs from command-line.
 
 ## How it works
 
